@@ -1,0 +1,142 @@
+pluginInfo:
+  # This is default sample specification
+  # Feel free to change it
+  # Call flowpdk showdoc pluginspec to see the list of available fields and their description
+  pluginName: 'EC-GCloud'
+  version: '1.0.0'
+  description: 'Integration with gcloud command-line tool to create and manage Google Cloud resources.'
+  author: 'CloudBees'
+  supportUrl: 'https://electric-cloud.com/support'
+  category: 'Utilities'
+  shell: 'ec-groovy'
+
+# Plugin configuration description
+configuration:
+  # This is a shell used for checking connection
+  shell: 'ec-groovy'
+  # A script for checking connection will be generated
+  checkConnection: 'true'
+  # A set of fields will be added to process debug level in the configuration
+  hasDebugLevel: true
+  resourceName: $[checkConnectionResource]
+  parameters:
+  -
+    name: config
+    documentation: The name for the created configuration
+    required: true
+    type: entry
+    label: Configuration Name
+  -
+    name: desc
+    documentation: Description for the configuration
+    required: false
+    type: entry
+    label: Description
+  -
+    name: gcloudPath
+    label: gcloud Path
+    documentation: An absolute or relative path to gcloud executable.
+    required: true
+    type: entry
+    value: /usr/bin/gcloud
+  -
+    name: configurationNameGCP
+    label: GCP Configuration Name
+    documentation: The name of the Google Cloud Platform configuration.
+    required: true
+    type: entry
+    value: default
+  -
+    name: credential
+    label: Key
+    documentation: The private key for access to  Google Cloud Platform.
+    type: credential
+    credentialType: key
+    userNameLabel: Account Name
+    keyLabel: Private Key
+  -
+    name: projectName
+    label: Project Name
+    documentation: The name of the Google Cloud Platform project.
+    required: false
+    type: entry
+  -
+    name: proprtiesGCP
+    label: GCP Properties
+    required: false
+    type: textarea
+    documentation: |
+      Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
+      Eg.: compute/zone asia-east1-b
+  -
+    name: checkConnectionResource
+    label: Check Configuration Resource
+    documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
+    required: false
+    type: entry
+    dependsOn: checkConnection
+    condition: ${checkConnection} == "true"
+
+procedures:
+-
+  name: 'Run Custom Command'
+  description: 'This procedure allows run any gcloud command.'
+  # configuration field will be generated automatically
+  hasConfig: true
+  parameters:
+  -
+    name: group
+    label: Group Of Commands
+    required: true
+    type: entry
+    documentation: Name of the group of the commands.
+  -
+    name: command
+    label: Command
+    required: true
+    type: entry
+    documentation: Name of the command.
+  -
+    name: subCommands
+    label: Sub Command
+    required: false
+    type: textarea
+    documentation: Name of the subcommands.
+  -
+    name: options
+    label: Options
+    required: false
+    type: textarea
+    documentation: "Options to pass to gcloud executable. Eg.: --option-name [paramerer]."
+  -
+    name: actionOnError
+    htmlDocumentation: Ignore error exception in specified cases.
+    label: Action On Error
+    type: select
+    required: true
+    value: 0
+    options:
+      - name: Throw error
+        value: 0
+      - name: Ignore If Matched
+        value: '=~'
+      - name: Ignore If Not Matched
+        value: '!~'
+  -
+    name: errorValue
+    label: Error Value
+    required: false
+    type: entry
+    documentation: Text for checking error condition.
+    dependsOn: actionOnError
+    condition: ${actionOnError} != "0"
+  -
+    name: resultPropertySheet
+    label: Result Property Sheet
+    required: true
+    type: entry
+    documentation: Results will be saved into this property/property sheet.
+    value: /myJob/runCustomCommand
+
+  outputParameters:
+    runCustomCommand: 'STDOUT after accomplishing the command.'
