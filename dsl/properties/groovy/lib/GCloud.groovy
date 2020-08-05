@@ -78,6 +78,32 @@ class GCloud extends FlowPlugin {
         log.info("step Run Custom Command has been finished")
     }
 
+/**
+    * runAnything - Run Anything/Run Anything
+    * Add your code into this method and it will be called when the step runs
+    * @param config (required: true)
+    * @param anything (required: true)
+    * @param resultPropertySheet (required: true)
+    
+    */
+    def runAnything(StepParameters p, StepResult sr) {
+        // Use this parameters wrapper for convenient access to your parameters
+        RunAnythingParameters sp = RunAnythingParameters.initParameters(p)
+
+        // Calling logger:
+        log.info p.asMap.get('config')
+        log.info p.asMap.get('anything')
+        log.info p.asMap.get('resultPropertySheet')
+        
+
+        // Setting job step summary to the config name
+        sr.setJobStepSummary(p.getParameter('config').getValue() ?: 'null')
+
+        sr.setReportUrl("Sample Report", 'https://cloudbees.com')
+        sr.apply()
+        log.info("step Run Anything has been finished")
+    }
+
 // === step ends ===
 
 }

@@ -140,3 +140,24 @@ procedures:
 
   outputParameters:
     runCustomCommand: 'STDOUT after accomplishing the command.'
+-
+  name: 'Run Anything'
+  description: 'This procedure allows run any commands.'
+  hasConfig: true
+  parameters:
+  -
+    name: anything
+    label: Anything
+    required: true
+    type: textarea
+    documentation: Anything to execution.
+  -
+    name: resultPropertySheet
+    label: Result Property Sheet
+    required: true
+    type: entry
+    documentation: Results will be saved into this property/property sheet.
+    value: /myJob/runAnything
+
+  outputParameters:
+    runAnything: 'STDOUT after accomplishing the command.'
