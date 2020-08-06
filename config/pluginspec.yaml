@@ -50,6 +50,7 @@ configuration:
     name: credential
     label: Key
     documentation: The private key for access to  Google Cloud Platform.
+    required: true
     type: credential
     credentialType: key
     userNameLabel: Account Name
@@ -108,28 +109,28 @@ procedures:
     required: false
     type: textarea
     documentation: "Options to pass to gcloud executable. Eg.: --option-name [paramerer]."
-  -
-    name: actionOnError
-    htmlDocumentation: Ignore error exception in specified cases.
-    label: Action On Error
-    type: select
-    required: true
-    value: 0
-    options:
-      - name: Throw error
-        value: 0
-      - name: Ignore If Matched
-        value: '=~'
-      - name: Ignore If Not Matched
-        value: '!~'
-  -
-    name: errorValue
-    label: Error Value
-    required: false
-    type: entry
-    documentation: Text for checking error condition.
-    dependsOn: actionOnError
-    condition: ${actionOnError} != "0"
+  #~ -
+    #~ name: actionOnError
+    #~ htmlDocumentation: Ignore error exception in specified cases.
+    #~ label: Action On Error
+    #~ type: select
+    #~ required: true
+    #~ value: 0
+    #~ options:
+      #~ - name: Throw error
+        #~ value: 0
+      #~ - name: Ignore If Matched
+        #~ value: '=~'
+      #~ - name: Ignore If Not Matched
+        #~ value: '!~'
+  #~ -
+    #~ name: errorValue
+    #~ label: Error Value
+    #~ required: false
+    #~ type: entry
+    #~ documentation: Text for checking error condition.
+    #~ dependsOn: actionOnError
+    #~ condition: ${actionOnError} != "0"
   -
     name: resultPropertySheet
     label: Result Property Sheet
@@ -140,3 +141,24 @@ procedures:
 
   outputParameters:
     runCustomCommand: 'STDOUT after accomplishing the command.'
+-
+  name: 'Run Anything'
+  description: 'This procedure allows run any commands.'
+  hasConfig: true
+  parameters:
+  -
+    name: anything
+    label: Anything
+    required: true
+    type: textarea
+    documentation: Anything to execution.
+  -
+    name: resultPropertySheet
+    label: Result Property Sheet
+    required: true
+    type: entry
+    documentation: Results will be saved into this property/property sheet.
+    value: /myJob/runAnything
+
+  outputParameters:
+    runAnything: 'STDOUT after accomplishing the command.'
