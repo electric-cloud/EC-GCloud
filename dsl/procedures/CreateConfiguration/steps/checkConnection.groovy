@@ -1,4 +1,4 @@
 $[/myProject/groovy/scripts/preamble.groovy.ignore]
 
 GCloud plugin = new GCloud()
-plugin.runStep('CreateConfiguration', 'checkConnection', 'checkConnection')
+plugin.runStep('$[/myProcedure/name]', 'checkConnection', 'checkConnection')

@@ -22,14 +22,6 @@ class RunCustomCommandParameters {
     */
     String options
     /**
-    * Label: Action On Error, type: select
-    */
-    String actionOnError
-    /**
-    * Label: Error Value, type: entry
-    */
-    String errorValue
-    /**
     * Label: Result Property Sheet, type: entry
     */
     String resultPropertySheet
@@ -45,14 +37,10 @@ class RunCustomCommandParameters {
         parameters.subCommands = subCommands
         def options = sp.getParameter('options').value
         parameters.options = options
-        def actionOnError = sp.getRequiredParameter('actionOnError').value
-        parameters.actionOnError = actionOnError
-        def errorValue = sp.getParameter('errorValue').value
-        parameters.errorValue = errorValue
         def resultPropertySheet = sp.getRequiredParameter('resultPropertySheet').value
         parameters.resultPropertySheet = resultPropertySheet
 
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 007bad51fef31f471a166fbfdac23513 ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 23c17ae4715c8a9760847144b08b4f14 ===
