@@ -183,7 +183,6 @@ class GCloud extends FlowPlugin {
     def runCustomCommand(StepParameters p, StepResult sr) {
         RunCustomCommandParameters sp = RunCustomCommandParameters.initParameters(p)
 
-//        Context context = getContext()
         log.info("CONTEXT: " + context.getRunContext())
 
         Config config = context.configValues
@@ -257,20 +256,57 @@ class GCloud extends FlowPlugin {
 
  */
     def runAnything(StepParameters p, StepResult sr) {
-        // Use this parameters wrapper for convenient access to your parameters
         RunAnythingParameters sp = RunAnythingParameters.initParameters(p)
 
-        // Calling logger:
-        log.info p.asMap.get('config')
-        log.info p.asMap.get('anything')
-        log.info p.asMap.get('resultPropertySheet')
+        log.info("CONTEXT: " + context.getRunContext())
 
+        Config config = context.configValues
 
-        // Setting job step summary to the config name
-        sr.setJobStepSummary(p.getParameter('config').getValue() ?: 'null' as String)
+        CLI cli = CLI.newInstance()
 
-        sr.setReportUrl("Sample Report", 'https://cloudbees.com')
-        sr.apply()
+        String anything = sp.anything
+        if (!(anything =~ /^#!/)) {
+            anything = "#!/bin/bash" + System.lineSeparator() + System.lineSeparator() + anything
+        }
+
+        boolean success = true
+        String summary
+        String data = ""
+        try {
+            createConfig(log, config)
+
+            File file = File.createTempFile("anything", "")
+            file.deleteOnExit()
+            file.write(anything)
+            file.setExecutable(true)
+
+//            log.info("#001: " + anything);
+
+            Command command = cli.newCommand(file.absolutePath)
+
+//            log.info("#002: " + command.renderCommand().toString());
+
+            ExecutionResult result = cli.runCommand(command)
+            if (!result.isSuccess()) {
+                log.error(result)
+                throw new Exception("${result.code}: ${result.stdErr}")
+            }
+
+            data = result.stdOut
+            summary = "The command succeeded: " + data
+        } catch (Throwable e) {
+            success = false
+            summary = "The command failed: " + e.message
+        }
+
+        String resultPropertySheet = sp.resultPropertySheet;
+        if (resultPropertySheet.isEmpty()) {
+            resultPropertySheet = "/myJob/runAnything"
+            log.info("Assumed result property sheet: " + resultPropertySheet)
+        }
+
+        processResult(sr, success, summary, resultPropertySheet, "runAnything", data)
+
         log.info("step Run Anything has been finished")
     }
 
