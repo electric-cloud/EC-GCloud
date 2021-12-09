@@ -1,17 +1,34 @@
 apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'java'
 
 repositories{
+    mavenLocal()
     mavenCentral()
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
     flatDir {
         dirs 'agent/deps/libs'
     }
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:2.4.13'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.8'
 
     // Change the version if you have upgraded the groovy library
-    implementation 'com.electriccloud.plugins:flowpdf-groovy-lib:1.1.1.0'
+    implementation 'com.electriccloud.plugins:flowpdf-groovy-lib:1.2.3.0'
 }
 
 

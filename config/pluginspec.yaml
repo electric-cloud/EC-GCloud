@@ -6,9 +6,14 @@ pluginInfo:
   version: '1.0.0'
   description: 'Integration with gcloud command-line tool to create and manage Google Cloud resources.'
   author: 'CloudBees'
-  supportUrl: 'https://electric-cloud.com/support'
+  supportUrl: https://cloudbees.com
   category: 'Utilities'
   shell: 'ec-groovy'
+  supportLevel: 10
+  hasAdoc: true
+  help: https://docs.cloudbees.com/plugins/cd/ec-gcloud
+  label: gcloud tool
+
 
 # Plugin configuration description
 configuration:
@@ -75,8 +80,6 @@ configuration:
     documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
     required: false
     type: entry
-    dependsOn: checkConnection
-    condition: ${checkConnection} == "true"
 
 procedures:
 -
