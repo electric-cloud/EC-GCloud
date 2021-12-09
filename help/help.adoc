@@ -1,0 +1,212 @@
+Plugin version @PLUGIN_VERSION@
+
+Revised on December 09, 2021
+
+
+
+
+
+== Overview
+
+Integration with https://cloud.google.com/sdk/gcloud[gcloud command-line tool] to create and manage Google Cloud resources.
+
+
+
+
+
+
+
+
+
+
+
+
+== Plugin configurations
+
+Plugin configurations are sets of parameters that apply
+across some or all of the plugin procedures. They
+reduce repetition of common values, create
+predefined parameter sets for end users, and
+securely store credentials where needed. Each configuration
+is given a unique name that is entered in designated
+parameters on procedures that use them.
+
+
+=== Creating plugin configurations
+
+To create plugin configurations in {CD}, do these steps:
+
+* Go to menu:Admistration[Plugins] to open the Plugin Manager.
+* Find the @PLUGIN_NAME@ row.
+* Click *Configure* to open the
+     Configurations page.
+* Click *Create Configuration* as per the description of parameters below.
+
+
+
+=== Configuration procedure parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+|__**Configuration Name**__ | The name for the created configuration
+
+
+|Description | Description for the configuration
+
+
+|__**gcloud Path**__ | An absolute or relative path to gcloud executable.
+
+
+|__**GCP Configuration Name**__ | The name of the Google Cloud Platform configuration.
+
+
+|__**Key**__ | The private key for access to  Google Cloud Platform.
+
+
+|Project Name | The name of the Google Cloud Platform project.
+
+
+|GCP Properties | Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
+Eg.: compute/zone asia-east1-b
+
+
+
+|Check Configuration Resource | A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
+
+
+|Check Connection? | If checked, the connection endpoint and credentials entered as part of the configuration will be tested. If this option is checked, configuration will not be saved if the test fails.
+
+
+|Debug Level | This option sets debug level for logs. If info is selected, only summary information will be shown, for debug, there will be some debug information and for trace the whole requests and responses will be shown.
+
+
+|===
+
+
+
+
+
+[[procedures]]
+== Plugin procedures
+
+
+IMPORTANT: For all parameter descriptions in this section, required parameters are shown in __**bold italics**__.
+
+
+
+
+[[RunCustomCommand]]
+=== Run Custom Command
+
+
+This procedure allows run any gcloud command.
+
+
+
+==== Run Custom Command parameters
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+| __**Configuration Name**__ | Previously defined configuration for the plugin
+
+
+| __**Group Of Commands**__ | Name of the group of the commands.
+
+
+| __**Command**__ | Name of the command.
+
+
+| Sub Command | Name of the subcommands.
+
+
+| Options | Options to pass to gcloud executable. Eg.: --option-name [paramerer].
+
+
+| __**Result Property Sheet**__ | Results will be saved into this property/property sheet.
+
+
+|===
+
+
+
+==== Output parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+|runCustomCommand |STDOUT after accomplishing the command.
+
+|===
+
+
+
+
+
+[[RunAnything]]
+=== Run Anything
+
+
+This procedure allows run any commands.
+
+
+
+==== Run Anything parameters
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+| __**Configuration Name**__ | Previously defined configuration for the plugin
+
+
+| __**Anything**__ | Anything to execution.
+
+
+| __**Result Property Sheet**__ | Results will be saved into this property/property sheet.
+
+
+|===
+
+
+
+==== Output parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+|runAnything |STDOUT after accomplishing the command.
+
+|===
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[rns]]
+== Release notes
+
+
+=== EC-GCloud 1.0.0
+
+- Initial Version. The following procedures were added.
+* Run Custom Command
+* Run Anything
+
+
+
