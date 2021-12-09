@@ -1,1 +1,0 @@
-Integration with https://cloud.google.com/sdk/gcloud[gcloud command-line tool] to create and manage Google Cloud resources.
