@@ -13,7 +13,19 @@ pluginInfo:
   hasAdoc: true
   help: https://docs.cloudbees.com/plugins/cd/ec-gcloud
   label: gcloud tool
+  detailedDescription: |
+    The https://cloud.google.com/sdk/gcloud[``gcloud`` command-line tool] is the primary CLI tool to create and manage Google Cloud resources. You can use this tool to perform many common platform tasks either from the command line or in scripts and other automations.
 
+    For example, you can use the gcloud tool to create and manage:
+
+    * Compute Engine virtual machine instances and other resources
+    * Cloud SQL instances
+    * Google Kubernetes Engine clusters
+    * Dataproc clusters and jobs
+    * Cloud DNS managed zones and record sets
+    * Cloud Deployment Manager deployments
+
+    You can also use the ``gcloud`` tool to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
 
 # Plugin configuration description
 configuration:
