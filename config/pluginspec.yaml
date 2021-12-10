@@ -92,6 +92,7 @@ configuration:
     documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
     required: false
     type: entry
+    value: $[/myJob/resName]
 
 procedures:
 -

@@ -12,10 +12,10 @@ services:
     networks:
       - internal
     tty: true
-  efagent-git:
-    container_name: efagent-git
-    image: electricflow/git:latest
-    hostname: "efagent-git"
+  efagent-gcloud:
+    container_name: efagent-gcloud
+    image: electricflow/gcloud:latest
+    hostname: "efagent-gcloud"
     ports:
       - "7808:7808"
     networks:
