@@ -57,21 +57,68 @@ configuration:
     type: entry
     value: /usr/bin/gcloud
   -
-    name: configurationNameGCP
+    name: gcpCconfigurationName
     label: GCP Configuration Name
     documentation: The name of the Google Cloud Platform configuration.
     required: true
     type: entry
     value: default
   -
+    name: authType
+    type: radio
+    options:
+      - name: Key
+        value: key
+      - name: Instance metadata
+        value: env
+    required: false
+    defaultValue: env
+    label: Authorization type
+    documentation: |
+      Authorization type: either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
+  -
     name: credential
-    label: Key
-    documentation: The private key for access to  Google Cloud Platform.
-    required: true
+    label: Service account key
+    documentation: |
+      Service account key in JSON format. For example,
+
+        {
+          "type": "service_account",
+          "project_id": "PROJECT ID",
+          "private_key_id": "PRIVATE KEY ID",
+          "private_key": "-----BEGIN PRIVATE KEY-----PRIVATE KEY CONTENT-----END PRIVATE KEY-----\n",
+          "client_email": "SERVICE ACCOUNT NAME@PROJECT ID.iam.gserviceaccount.com",
+          "client_id": "CLIENT ID",
+          "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+          "token_uri": "https://oauth2.googleapis.com/token",
+          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
+        }
+
+    htmlDocumentation: |
+      Service account key in JSON format. For example,<br/>
+      <pre>
+      {
+        "type": "service_account",
+        "project_id": "PROJECT ID",
+        "private_key_id": "PRIVATE KEY ID",
+        "private_key": "-----BEGIN PRIVATE KEY-----PRIVATE KEY CONTENT-----END PRIVATE KEY-----\n",
+        "client_email": "SERVICE ACCOUNT NAME@PROJECT ID.iam.gserviceaccount.com",
+        "client_id": "CLIENT ID",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
+      }
+      </pre>
+    required: false
+    hideUserNameField: true
     type: credential
     credentialType: key
-    userNameLabel: Account Name
-    keyLabel: Private Key
+    keyLabel: Service account key
+    dependsOn: authType
+    condition: ${authType} == 'key'
+    label: Credential
   -
     name: projectName
     label: Project Name
@@ -79,7 +126,7 @@ configuration:
     required: false
     type: entry
   -
-    name: proprtiesGCP
+    name: gcpProprties
     label: GCP Properties
     required: false
     type: textarea
@@ -92,7 +139,6 @@ configuration:
     documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
     required: false
     type: entry
-    value: $[/myJob/resName]
 
 procedures:
 -

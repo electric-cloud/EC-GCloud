@@ -1,29 +1,33 @@
 package com.cloudbees.pdk.hen
 
-import com.cloudbees.pdk.hen.procedures.*
 import com.cloudbees.pdk.hen.Plugin
-
-import static com.cloudbees.pdk.hen.Utils.env
+import com.cloudbees.pdk.hen.procedures.*
 
 class GCloud extends Plugin {
+    static  String pluginName = 'EC-GCloud'
 
     static GCloud create() {
-        GCloud plugin = new GCloud(name: 'EC-GCloud')
+        GCloud plugin = new GCloud(name: pluginName)
         plugin.configure(plugin.config)
         return plugin
     }
-    static GCloud createWithoutConfig() {
-        GCloud plugin = new GCloud(name: 'EC-GCloud')
+
+    static GCloud createWithoutConfig(String resourceName) {
+        GCloud plugin = new GCloud(name: pluginName, defaultResource: resourceName)
         return plugin
     }
 
     //user-defined after boilerplate was generated, default parameters setup
     GCloudConfig config = GCloudConfig
         .create(this)
-        //.parameter(value) add parameters here
+    //.parameter(value) add parameters here
 
+    EditConfiguration editConfig() {
+        editConfiguration.addParam(this.configFieldNameCreateConfiguration, this.configName)
+        return editConfiguration
+    }
 
-    EditConfiguration editConfiguration = EditConfiguration.create(this)
+//    EditConfiguration editConfiguration = EditConfiguration.create(this)
 
     RunAnything runAnything = RunAnything.create(this)
 
