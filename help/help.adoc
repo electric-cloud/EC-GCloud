@@ -6,12 +6,6 @@ Revised on December 09, 2021
 
 
 
-== Overview
-
-Integration with https://cloud.google.com/sdk/gcloud[gcloud command-line tool] to create and manage Google Cloud resources.
-
-
-
 
 
 

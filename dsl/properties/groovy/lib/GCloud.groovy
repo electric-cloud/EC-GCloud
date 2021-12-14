@@ -2,7 +2,6 @@ import com.cloudbees.flowpdf.*
 import com.cloudbees.flowpdf.components.cli.CLI
 import com.cloudbees.flowpdf.components.cli.Command
 import com.cloudbees.flowpdf.components.cli.ExecutionResult
-import groovy.json.JsonSlurper
 
 /**
  * GCloud
@@ -12,11 +11,11 @@ class GCloud extends FlowPlugin {
     @Override
     Map<String, Object> pluginInfo() {
         return [
-                pluginName         : '@PLUGIN_KEY@',
-                pluginVersion      : '@PLUGIN_VERSION@',
-                configFields       : ['config'],
-                configLocations    : ['ec_plugin_cfgs'],
-                defaultConfigValues: [:]
+            pluginName         : '@PLUGIN_KEY@',
+            pluginVersion      : '@PLUGIN_VERSION@',
+            configFields       : ['config'],
+            configLocations    : ['ec_plugin_cfgs'],
+            defaultConfigValues: [:]
         ]
     }
 
@@ -24,80 +23,94 @@ class GCloud extends FlowPlugin {
 
         Map<String, String> cMap = config.getAsMap() as Map<String, String>
 
-        log.info("Create configuration: ${cMap.configurationNameGCP}")
-
-        CLI cli = CLI.newInstance()
-        Command command = cli.newCommand(
-                cMap.gcloudPath,
-                [
-                        '--quiet',
-                        'config',
-                        'configurations',
-                        'create',
-                        cMap.configurationNameGCP
-                ] as ArrayList<String>
-        )
-        ExecutionResult result = cli.runCommand(command)
-        if (!result.isSuccess() && !(result.stdErr =~ /it already exists/)) {
-            log.error(result)
-            throw new Exception("Can't create configuration ${result.code}: ${result.stdErr}")
+        if (cMap.authType) {
+            cMap.authType = cMap.authType.toLowerCase()
+        } else {
+            cMap.authType = "env"
         }
 
-        log.info("Activate configuration: ${cMap.configurationNameGCP}")
+        CLI cli = CLI.newInstance()
+        Command command
+        ExecutionResult result
 
-        command = cli.newCommand(
+        if (cMap.authType == "key") {
+            log.info("Create configuration: ${cMap.gcloudCconfigurationName}")
+            command = cli.newCommand(
                 cMap.gcloudPath,
                 [
-                        '--quiet',
-                        'config',
-                        'configurations',
-                        'activate',
-                        cMap.configurationNameGCP
+                    '--quiet',
+                    'config',
+                    'configurations',
+                    'create',
+                    cMap.gcloudCconfigurationName
                 ] as ArrayList<String>
+            )
+            result = cli.runCommand(command)
+            if (!result.isSuccess() && !(result.stdErr =~ /it already exists/)) {
+                log.error(result)
+                throw new RuntimeException("Can't create configuration ${result.code}: ${result.stdErr}")
+            }
+        } else {
+            log.info("Using instance metadata")
+        }
+
+        log.info("Activate configuration: ${cMap.gcloudCconfigurationName}")
+
+        command = cli.newCommand(
+            cMap.gcloudPath,
+            [
+                '--quiet',
+                'config',
+                'configurations',
+                'activate',
+                cMap.gcloudCconfigurationName
+            ] as ArrayList<String>
         )
         result = cli.runCommand(command)
         if (!result.isSuccess()) {
             log.error(result)
-            throw new Exception("Can't activate configuration ${result.code}: ${result.stdErr}")
+            throw new RuntimeException("Can't activate configuration ${result.code}: ${result.stdErr}")
         }
 
-        Credential cred = config.getCredential('credential')
-        String userName = cred.userName
-        String password = cred.secretValue
+        if (cMap.authType == "key") {
+            Credential cred = config.getCredential('credential')
+//        String userName = cred.userName
+            String password = cred.secretValue
 
-        log.info("Activate service account: ${userName}")
+            log.info("Activate service account")
 
-        File file = File.createTempFile("key", ".json")
-        file.deleteOnExit()
-        file.write(password)
+            File file = File.createTempFile("key", ".json")
+            file.deleteOnExit()
+            file.write(password)
 
-        ArrayList<String> params = [
+            ArrayList<String> params = [
                 '--quiet',
                 'auth',
                 'activate-service-account',
-                userName,
+//            userName,
                 '--key-file', file.absolutePath,
-        ]
+            ]
 
-        if (cMap.projectName) {
-            params.add('--project')
-            params.add(cMap.projectName)
+            if (cMap.projectName) {
+                params.add('--project')
+                params.add(cMap.projectName)
+            }
+
+            command = cli.newCommand(cMap.gcloudPath, params)
+            result = cli.runCommand(command)
+            if (!result.isSuccess()) {
+                log.error(result)
+                throw new RuntimeException("Can't activate account ${result.code}: ${result.stdErr}")
+            }
         }
 
-        command = cli.newCommand(cMap.gcloudPath, params)
-        result = cli.runCommand(command)
-        if (!result.isSuccess()) {
-            log.error(result)
-            throw new Exception("Can't activate account ${result.code}: ${result.stdErr}")
-        }
-
-        if (cMap.proprtiesGCP) {
-            cMap.proprtiesGCP.split(/\r?\n/).each {
-                String[] pair = it.split()
+        if (cMap.gcloudProprties) {
+            cMap.gcloudProprties.split(/\r?\n/).each {
+                String[] pair = it.split(" ", 2)
 
                 if (pair.length > 0) {
                     if (pair.length < 2) {
-                        throw new Exception("Wrong property ${it}")
+                        throw new RuntimeException("Wrong property ${it}")
                     }
                     log.info("Set property '${pair[0]}' to '${pair[1]}'")
 
@@ -105,7 +118,7 @@ class GCloud extends FlowPlugin {
                     result = cli.runCommand(command)
                     if (!result.isSuccess()) {
                         log.info(result)
-                        throw new Exception("Can't set property '${pair[0]}' ${result.code}: ${result.stdErr}")
+                        throw new RuntimeException("Can't set property '${pair[0]}' ${result.code}: ${result.stdErr}")
                     }
                 }
             }
@@ -116,10 +129,10 @@ class GCloud extends FlowPlugin {
  * @param config (required: true)
  * @param desc (required: false)
  * @param gcloudPath (required: true)
- * @param configurationNameGCP (required: true)
+ * @param gcloudCconfigurationName (required: true)
  * @param credential (required: true)
  * @param projectName (required: false)
- * @param proprtiesGCP (required: false)
+ * @param gcloudProprties (required: false)
  * @param checkConnectionResource (required: false)
 
  */
@@ -190,9 +203,9 @@ class GCloud extends FlowPlugin {
         CLI cli = CLI.newInstance()
 
         ArrayList<String> params = [
-                '--quiet',
-                sp.group,
-                sp.command,
+            '--quiet',
+            sp.group,
+            sp.command,
         ]
 
         sp.subCommands.split(/\r?\n/).each {
@@ -226,7 +239,7 @@ class GCloud extends FlowPlugin {
             ExecutionResult result = cli.runCommand(command)
             if (!result.isSuccess()) {
                 log.error(result)
-                throw new Exception("${result.code}: ${result.stdErr}")
+                throw new RuntimeException("${result.code}: ${result.stdErr}")
             }
 
             data = result.stdOut
@@ -289,7 +302,7 @@ class GCloud extends FlowPlugin {
             ExecutionResult result = cli.runCommand(command)
             if (!result.isSuccess()) {
                 log.error(result)
-                throw new Exception("${result.code}: ${result.stdErr}")
+                throw new RuntimeException("${result.code}: ${result.stdErr}")
             }
 
             data = result.stdOut

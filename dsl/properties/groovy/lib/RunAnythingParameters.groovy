@@ -10,7 +10,7 @@ class RunAnythingParameters {
     */
     String anything
     /**
-    * Label: Result Property Sheet, type: entry
+    * Label: Result property sheet, type: entry
     */
     String resultPropertySheet
 
@@ -25,4 +25,4 @@ class RunAnythingParameters {
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 9c0f69bb5dfec2c650e021e011e56548 ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 648dd7ebbcb61ffcc33c4a334d9fa0ed ===
