@@ -56,8 +56,8 @@ class TestConfiguration extends Procedure {
     }
 
 
-    TestConfiguration gcpCconfigurationName(String gcpCconfigurationName) {
-        this.addParam('gcpCconfigurationName', gcpCconfigurationName)
+    TestConfiguration gcloudCconfigurationName(String gcloudCconfigurationName) {
+        this.addParam('gcloudCconfigurationName', gcloudCconfigurationName)
         return this
     }
 
@@ -91,8 +91,8 @@ class TestConfiguration extends Procedure {
     }
 
 
-    TestConfiguration gcpProprties(String gcpProprties) {
-        this.addParam('gcpProprties', gcpProprties)
+    TestConfiguration gcloudProprties(String gcloudProprties) {
+        this.addParam('gcloudProprties', gcloudProprties)
         return this
     }
 

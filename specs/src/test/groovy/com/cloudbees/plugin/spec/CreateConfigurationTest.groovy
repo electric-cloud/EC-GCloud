@@ -1,48 +1,81 @@
 package com.cloudbees.plugin.spec
 
 import com.cloudbees.pdk.hen.GCloud
+import com.cloudbees.pdk.hen.models.Project
+import com.cloudbees.pdk.hen.models.Resource
 import com.cloudbees.pdk.hen.procedures.TestConfiguration
-import spock.lang.Ignore
+import spock.lang.Shared
+import spock.lang.Unroll
 
 class CreateConfigurationTest extends PluginTestHelper {
+    static String projectName = "GCloudTestProject"
+    static Project project
+    static Resource resource
 
-    def 'create config'() {
-        when:
-        def name = new Random().nextInt(9999999) + " test config"
-        println getKey()
-        createPluginConfiguration(pluginName, name, [checkConnection: '1', projectName: getProjectName(), zone: getZone()], "admin", getKey())
-        then:
-        assert true
-        cleanup:
-        deleteConfiguration(pluginName, name)
+    @Shared
+    TestConfiguration procedure
+
+    def setupSpec() {
+        project = new Project(projectName)
+        project.create()
+        resource = createResource(gcloudAgentHost, gcloudAgentPort)
+        def plugin = GCloud.createWithoutConfig()
+        procedure = plugin.testConfiguration
     }
 
-    def 'create config wrong token'() {
-        when:
-        createPluginConfiguration(pluginName, 'wrong config', [checkConnection: '1', projectName: getProjectName(), zone: getZone()], username: 'test', 'token')
-        then:
-        thrown RuntimeException
+    def cleanupSpec() {
+        project.delete()
     }
 
-    def 'test connection'() {
+    @Unroll
+    def 'Check config'() {
         when:
-        def gcp = GCloud.createWithoutConfig()
-        def r = gcp.testConfiguration
-            .projectName(getProjectName())
-            .authType(TestConfiguration.AuthTypeOptions.KEY)
-            .zone(getZone())
-            .credential('', getKeyClean())
+        def response = procedure.flush()
+            .gcloudPath(gcloudPath)
+            .authType('key')
+            .credential('', gcloudKey)
+            .gcloudCconfigurationName(gcloudConfigurationName)
+            .projectName(gcloudProject)
+            .gcloudProprties("""compute/zone ${gcloudZone}""")
+            .checkConnectionResource(resource.getName())
             .runNaked()
         then:
-        assert r.successful
+        assert response.successful
     }
 
-    @Ignore
-    def 'test connection resource'() {
+    @Unroll
+    def 'Check config: invalid key'() {
         when:
-        def gcp = GCloud.createWithoutConfig()
-        def r = gcp.testConfiguration.projectName(getProjectName()).authType(TestConfiguration.AuthTypeOptions.INSTANCE_METADATA).zone(getZone()).runNaked()
+        def response = procedure.flush()
+            .gcloudPath(gcloudPath)
+            .authType('key')
+            .credential('', "{}")
+            .gcloudCconfigurationName(gcloudConfigurationName)
+            .projectName(gcloudProject)
+            .gcloudProprties("""compute/zone ${gcloudZone}""")
+            .checkConnectionResource(resource.getName())
+            .runNaked()
         then:
-        assert r.successful
+        assert !response.successful
+        and:
+        assert response.jobProperties.configError =~ /The \.json key file is not in a valid format/
+    }
+
+    @Unroll
+    def 'Check config: invalid resource'() {
+        when:
+        def response = procedure.flush()
+            .gcloudPath(gcloudPath)
+            .authType('key')
+            .credential('', gcloudKey)
+            .gcloudCconfigurationName(gcloudConfigurationName)
+            .projectName(gcloudProject)
+            .gcloudProprties("""compute/zone ${gcloudZone}""")
+//            .checkConnectionResource("")
+            .runNaked()
+        then:
+        assert !response.successful
+        and:
+        assert response.jobProperties.configError =~ /No such file or directory/
     }
 }

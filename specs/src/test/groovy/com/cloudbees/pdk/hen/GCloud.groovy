@@ -4,7 +4,7 @@ import com.cloudbees.pdk.hen.Plugin
 import com.cloudbees.pdk.hen.procedures.*
 
 class GCloud extends Plugin {
-    static  String pluginName = 'EC-GCloud'
+    static String pluginName = 'EC-GCloud'
 
     static GCloud create() {
         GCloud plugin = new GCloud(name: pluginName)
@@ -12,8 +12,8 @@ class GCloud extends Plugin {
         return plugin
     }
 
-    static GCloud createWithoutConfig(String resourceName) {
-        GCloud plugin = new GCloud(name: pluginName, defaultResource: resourceName)
+    static GCloud createWithoutConfig() {
+        GCloud plugin = new GCloud(name: pluginName)
         return plugin
     }
 

@@ -6,7 +6,7 @@ import com.cloudbees.flowpdf.StepParameters
 
 class RunCustomCommandParameters {
     /**
-    * Label: Group Of Commands, type: entry
+    * Label: Group Of commands, type: entry
     */
     String group
     /**
@@ -14,7 +14,7 @@ class RunCustomCommandParameters {
     */
     String command
     /**
-    * Label: Sub Command, type: textarea
+    * Label: Sub-command, type: textarea
     */
     String subCommands
     /**
@@ -22,7 +22,7 @@ class RunCustomCommandParameters {
     */
     String options
     /**
-    * Label: Result Property Sheet, type: entry
+    * Label: Result property sheet, type: entry
     */
     String resultPropertySheet
 
@@ -43,4 +43,4 @@ class RunCustomCommandParameters {
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 23c17ae4715c8a9760847144b08b4f14 ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 2841349e959dd61073e1aa73bd16e69c ===

@@ -34,7 +34,7 @@ class GCloud extends FlowPlugin {
         ExecutionResult result
 
         if (cMap.authType == "key") {
-            log.info("Create configuration: ${cMap.gcpCconfigurationName}")
+            log.info("Create configuration: ${cMap.gcloudCconfigurationName}")
             command = cli.newCommand(
                 cMap.gcloudPath,
                 [
@@ -42,7 +42,7 @@ class GCloud extends FlowPlugin {
                     'config',
                     'configurations',
                     'create',
-                    cMap.gcpCconfigurationName
+                    cMap.gcloudCconfigurationName
                 ] as ArrayList<String>
             )
             result = cli.runCommand(command)
@@ -54,7 +54,7 @@ class GCloud extends FlowPlugin {
             log.info("Using instance metadata")
         }
 
-        log.info("Activate configuration: ${cMap.gcpCconfigurationName}")
+        log.info("Activate configuration: ${cMap.gcloudCconfigurationName}")
 
         command = cli.newCommand(
             cMap.gcloudPath,
@@ -63,7 +63,7 @@ class GCloud extends FlowPlugin {
                 'config',
                 'configurations',
                 'activate',
-                cMap.gcpCconfigurationName
+                cMap.gcloudCconfigurationName
             ] as ArrayList<String>
         )
         result = cli.runCommand(command)
@@ -104,8 +104,8 @@ class GCloud extends FlowPlugin {
             }
         }
 
-        if (cMap.gcpProprties) {
-            cMap.gcpProprties.split(/\r?\n/).each {
+        if (cMap.gcloudProprties) {
+            cMap.gcloudProprties.split(/\r?\n/).each {
                 String[] pair = it.split(" ", 2)
 
                 if (pair.length > 0) {
@@ -129,10 +129,10 @@ class GCloud extends FlowPlugin {
  * @param config (required: true)
  * @param desc (required: false)
  * @param gcloudPath (required: true)
- * @param gcpCconfigurationName (required: true)
+ * @param gcloudCconfigurationName (required: true)
  * @param credential (required: true)
  * @param projectName (required: false)
- * @param gcpProprties (required: false)
+ * @param gcloudProprties (required: false)
  * @param checkConnectionResource (required: false)
 
  */

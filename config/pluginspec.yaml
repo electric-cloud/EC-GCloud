@@ -42,7 +42,7 @@ configuration:
     documentation: The name for the created configuration
     required: true
     type: entry
-    label: Configuration Name
+    label: Configuration name
   -
     name: desc
     documentation: Description for the configuration
@@ -51,14 +51,14 @@ configuration:
     label: Description
   -
     name: gcloudPath
-    label: gcloud Path
+    label: gcloud path
     documentation: An absolute or relative path to gcloud executable.
     required: true
     type: entry
     value: /usr/bin/gcloud
   -
-    name: gcpCconfigurationName
-    label: GCP Configuration Name
+    name: gcloudCconfigurationName
+    label: gcloud configuration name
     documentation: The name of the Google Cloud Platform configuration.
     required: true
     type: entry
@@ -121,13 +121,13 @@ configuration:
     label: Credential
   -
     name: projectName
-    label: Project Name
+    label: Project name
     documentation: The name of the Google Cloud Platform project.
     required: false
     type: entry
   -
-    name: gcpProprties
-    label: GCP Properties
+    name: gcloudProprties
+    label: gcloud properties
     required: false
     type: textarea
     documentation: |
@@ -135,7 +135,7 @@ configuration:
       Eg.: compute/zone asia-east1-b
   -
     name: checkConnectionResource
-    label: Check Configuration Resource
+    label: Check configuration resource
     documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
     required: false
     type: entry
@@ -149,7 +149,7 @@ procedures:
   parameters:
   -
     name: group
-    label: Group Of Commands
+    label: Group Of commands
     required: true
     type: entry
     documentation: Name of the group of the commands.
@@ -161,7 +161,7 @@ procedures:
     documentation: Name of the command.
   -
     name: subCommands
-    label: Sub Command
+    label: Sub-command
     required: false
     type: textarea
     documentation: Name of the subcommands.
@@ -174,7 +174,7 @@ procedures:
   #~ -
     #~ name: actionOnError
     #~ htmlDocumentation: Ignore error exception in specified cases.
-    #~ label: Action On Error
+    #~ label: Action on error
     #~ type: select
     #~ required: true
     #~ value: 0
@@ -187,7 +187,7 @@ procedures:
         #~ value: '!~'
   #~ -
     #~ name: errorValue
-    #~ label: Error Value
+    #~ label: Error value
     #~ required: false
     #~ type: entry
     #~ documentation: Text for checking error condition.
@@ -195,7 +195,7 @@ procedures:
     #~ condition: ${actionOnError} != "0"
   -
     name: resultPropertySheet
-    label: Result Property Sheet
+    label: Result property sheet
     required: true
     type: entry
     documentation: Results will be saved into this property/property sheet.
@@ -216,7 +216,7 @@ procedures:
     documentation: Anything to execution.
   -
     name: resultPropertySheet
-    label: Result Property Sheet
+    label: Result property sheet
     required: true
     type: entry
     documentation: Results will be saved into this property/property sheet.
