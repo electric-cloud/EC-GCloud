@@ -8,6 +8,7 @@ import com.cloudbees.pdk.hen.models.Project
 import com.cloudbees.pdk.hen.procedures.GCloudConfig
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.lang.Unroll
@@ -17,7 +18,7 @@ import static com.cloudbees.pdk.hen.Utils.setConfigurationValues
 //@Ignore
 @Slf4j
 @Stepwise
-class BrowseResourcesTest extends PluginTestHelper {
+class RunCustomCommandTest extends PluginTestHelper {
     @Shared
     GCloud plugin
 
@@ -33,7 +34,7 @@ class BrowseResourcesTest extends PluginTestHelper {
     }
 
     @Unroll
-    def 'Browse resources: #caseId: #command'() {
+    def 'RunCustomCommand: #caseId: #command'() {
         when:
         GCloudConfig gcloudConfig = GCloudConfig.create(plugin)
         gcloudConfig.gcloudPath(gcloudPath)
