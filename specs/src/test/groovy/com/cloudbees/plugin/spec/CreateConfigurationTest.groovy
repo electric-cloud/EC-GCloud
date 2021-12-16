@@ -21,7 +21,7 @@ class CreateConfigurationTest extends PluginTestHelper {
         project = new Project(projectName)
         project.create()
         resource = createResource(gcloudAgentHost, gcloudAgentPort)
-        GCloud plugin = GCloud.createWithoutConfig()
+        GCloud plugin = GCloud.createWithoutConfig(resource.getName())
         procedure = plugin.testConfiguration
     }
 
