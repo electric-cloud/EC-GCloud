@@ -48,8 +48,8 @@ class GCloudConfig extends Procedure {
     }
     
     
-    GCloudConfig gcloudCconfigurationName(String gcloudCconfigurationName) {
-        this.addParam('gcloudCconfigurationName', gcloudCconfigurationName)
+    GCloudConfig gcloudConfigurationName(String gcloudConfigurationName) {
+        this.addParam('gcloudConfigurationName', gcloudConfigurationName)
         return this
     }
     

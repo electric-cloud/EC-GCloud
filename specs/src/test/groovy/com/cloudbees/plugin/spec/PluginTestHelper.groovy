@@ -1,6 +1,7 @@
 package com.cloudbees.plugin.spec
 
 import com.cloudbees.pdk.hen.*
+import com.cloudbees.pdk.hen.models.Project
 import com.cloudbees.pdk.hen.models.Resource
 import com.cloudbees.pdk.hen.models.Workspace
 import groovy.util.logging.Slf4j
@@ -14,6 +15,8 @@ class PluginTestHelper extends Specification {
     static ServerHandler serverHandler = ServerHandler.getInstance()
     static RunOptions runOpts = new RunOptions()
 
+    static String projectName = "GCloudTestProject"
+
     static final String gcloudAgentHost = Utils.env("GCLOUD_AGENT_HOST", "efagent-gcloud")
     static final String gcloudAgentPort = Utils.env("GCLOUD_AGENT_PORT", "7808")
     static final String gcloudAgentOs = Utils.env("GCLOUD_AGENT_OS", "linux")
@@ -24,8 +27,11 @@ class PluginTestHelper extends Specification {
     static final String gcloudProject = Utils.env("GCLOUD_PROJECT")
     static final String gcloudConfigurationName = Utils.env("GCLOUD_CONFIGURATION_NAME", "default")
 
-    static String credsPrivateKeyFieldName = "credential"
-    static Credential credsKey = new Credential(userName: "", password: gcloudKey)
+    static String credentialFieldName = "credential"
+    static Credential credential = new Credential(userName: "", password: gcloudKey)
+
+    static Project project
+    static Resource resource
 
     def static getKey(String envName) {
         String base64 = Utils.env(envName)

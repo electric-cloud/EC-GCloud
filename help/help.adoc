@@ -1,6 +1,6 @@
 Plugin version @PLUGIN_VERSION@
 
-Revised on December 09, 2021
+Revised on December 16, 2021
 
 
 
@@ -44,30 +44,51 @@ To create plugin configurations in {CD}, do these steps:
 |===
 |Parameter |Description
 
-|__**Configuration Name**__ | The name for the created configuration
+|__**Configuration name**__ | The name for the created configuration
 
 
 |Description | Description for the configuration
 
 
-|__**gcloud Path**__ | An absolute or relative path to gcloud executable.
+|__**gcloud path**__ | An absolute or relative path to gcloud executable.
 
 
-|__**GCP Configuration Name**__ | The name of the Google Cloud Platform configuration.
+|__**gcloud configuration name**__ | The name of the Google Cloud Platform configuration.
 
 
-|__**Key**__ | The private key for access to  Google Cloud Platform.
+|Authorization type | Authorization type: either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
 
 
-|Project Name | The name of the Google Cloud Platform project.
+
+|Credential | Service account key in JSON format. For example,
 
 
-|GCP Properties | Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
+
+
+{
+  "type": "service_account",
+  "project_id": "PROJECT ID",
+  "private_key_id": "PRIVATE KEY ID",
+  "private_key": "-----BEGIN PRIVATE KEY-----PRIVATE KEY CONTENT-----END PRIVATE KEY-----\n",
+  "client_email": "SERVICE ACCOUNT NAME@PROJECT ID.iam.gserviceaccount.com",
+  "client_id": "CLIENT ID",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
+}
+
+
+
+|Project name | The name of the Google Cloud Platform project.
+
+
+|gcloud properties | Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
 Eg.: compute/zone asia-east1-b
 
 
 
-|Check Configuration Resource | A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
+|Check configuration resource | A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
 
 
 |Check Connection? | If checked, the connection endpoint and credentials entered as part of the configuration will be tested. If this option is checked, configuration will not be saved if the test fails.
@@ -107,19 +128,19 @@ This procedure allows run any gcloud command.
 | __**Configuration Name**__ | Previously defined configuration for the plugin
 
 
-| __**Group Of Commands**__ | Name of the group of the commands.
+| __**Group Of commands**__ | Name of the group of the commands.
 
 
 | __**Command**__ | Name of the command.
 
 
-| Sub Command | Name of the subcommands.
+| Sub-command | Name of the subcommands.
 
 
 | Options | Options to pass to gcloud executable. Eg.: --option-name [paramerer].
 
 
-| __**Result Property Sheet**__ | Results will be saved into this property/property sheet.
+| __**Result property sheet**__ | Results will be saved into this property/property sheet.
 
 
 |===
@@ -159,7 +180,7 @@ This procedure allows run any commands.
 | __**Anything**__ | Anything to execution.
 
 
-| __**Result Property Sheet**__ | Results will be saved into this property/property sheet.
+| __**Result property sheet**__ | Results will be saved into this property/property sheet.
 
 
 |===
