@@ -17,6 +17,11 @@ class GCloud extends Plugin {
         return plugin
     }
 
+    static GCloud createWithoutConfig(String resourceName) {
+        GCloud plugin = new GCloud(name: pluginName, defaultResource: resourceName)
+        return plugin
+    }
+
     //user-defined after boilerplate was generated, default parameters setup
     GCloudConfig config = GCloudConfig
         .create(this)
