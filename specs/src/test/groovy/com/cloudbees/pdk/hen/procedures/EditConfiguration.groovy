@@ -56,8 +56,8 @@ class EditConfiguration extends Procedure {
     }
 
 
-    EditConfiguration gcloudCconfigurationName(String gcloudCconfigurationName) {
-        this.addParam('gcloudCconfigurationName', gcloudCconfigurationName)
+    EditConfiguration gcloudConfigurationName(String gcloudConfigurationName) {
+        this.addParam('gcloudConfigurationName', gcloudConfigurationName)
         return this
     }
 

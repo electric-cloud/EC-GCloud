@@ -4,14 +4,16 @@ import com.cloudbees.pdk.hen.GCloud
 import com.cloudbees.pdk.hen.models.Project
 import com.cloudbees.pdk.hen.models.Resource
 import com.cloudbees.pdk.hen.procedures.TestConfiguration
+import groovy.util.logging.Slf4j
+import spock.lang.Ignore
 import spock.lang.Shared
+import spock.lang.Stepwise
 import spock.lang.Unroll
 
+//@Ignore
+@Slf4j
+@Stepwise
 class CreateConfigurationTest extends PluginTestHelper {
-    static String projectName = "GCloudTestProject"
-    static Project project
-    static Resource resource
-
     @Shared
     TestConfiguration procedure
 
@@ -19,7 +21,7 @@ class CreateConfigurationTest extends PluginTestHelper {
         project = new Project(projectName)
         project.create()
         resource = createResource(gcloudAgentHost, gcloudAgentPort)
-        def plugin = GCloud.createWithoutConfig()
+        GCloud plugin = GCloud.createWithoutConfig(resource.getName())
         procedure = plugin.testConfiguration
     }
 
@@ -28,13 +30,29 @@ class CreateConfigurationTest extends PluginTestHelper {
     }
 
     @Unroll
-    def 'Check config'() {
+    def 'Check config: key'() {
         when:
         def response = procedure.flush()
             .gcloudPath(gcloudPath)
             .authType('key')
             .credential('', gcloudKey)
-            .gcloudCconfigurationName(gcloudConfigurationName)
+            .gcloudConfigurationName(gcloudConfigurationName)
+            .projectName(gcloudProject)
+            .gcloudProprties("""compute/zone ${gcloudZone}""")
+            .checkConnectionResource(resource.getName())
+            .runNaked()
+        then:
+        assert response.successful
+    }
+
+    @Unroll
+    def 'Check config: env'() {
+        when:
+        def response = procedure.flush()
+            .gcloudPath(gcloudPath)
+            .authType('env')
+//            .credential('', gcloudKey)
+            .gcloudConfigurationName(gcloudConfigurationName)
             .projectName(gcloudProject)
             .gcloudProprties("""compute/zone ${gcloudZone}""")
             .checkConnectionResource(resource.getName())
@@ -50,7 +68,7 @@ class CreateConfigurationTest extends PluginTestHelper {
             .gcloudPath(gcloudPath)
             .authType('key')
             .credential('', "{}")
-            .gcloudCconfigurationName(gcloudConfigurationName)
+            .gcloudConfigurationName(gcloudConfigurationName)
             .projectName(gcloudProject)
             .gcloudProprties("""compute/zone ${gcloudZone}""")
             .checkConnectionResource(resource.getName())
@@ -68,7 +86,7 @@ class CreateConfigurationTest extends PluginTestHelper {
             .gcloudPath(gcloudPath)
             .authType('key')
             .credential('', gcloudKey)
-            .gcloudCconfigurationName(gcloudConfigurationName)
+            .gcloudConfigurationName(gcloudConfigurationName)
             .projectName(gcloudProject)
             .gcloudProprties("""compute/zone ${gcloudZone}""")
 //            .checkConnectionResource("")

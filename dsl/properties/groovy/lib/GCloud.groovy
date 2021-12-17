@@ -34,7 +34,7 @@ class GCloud extends FlowPlugin {
         ExecutionResult result
 
         if (cMap.authType == "key") {
-            log.info("Create configuration: ${cMap.gcloudCconfigurationName}")
+            log.info("Create configuration: ${cMap.gcloudConfigurationName}")
             command = cli.newCommand(
                 cMap.gcloudPath,
                 [
@@ -42,7 +42,7 @@ class GCloud extends FlowPlugin {
                     'config',
                     'configurations',
                     'create',
-                    cMap.gcloudCconfigurationName
+                    cMap.gcloudConfigurationName
                 ] as ArrayList<String>
             )
             result = cli.runCommand(command)
@@ -54,7 +54,7 @@ class GCloud extends FlowPlugin {
             log.info("Using instance metadata")
         }
 
-        log.info("Activate configuration: ${cMap.gcloudCconfigurationName}")
+        log.info("Activate configuration: ${cMap.gcloudConfigurationName}")
 
         command = cli.newCommand(
             cMap.gcloudPath,
@@ -63,7 +63,7 @@ class GCloud extends FlowPlugin {
                 'config',
                 'configurations',
                 'activate',
-                cMap.gcloudCconfigurationName
+                cMap.gcloudConfigurationName
             ] as ArrayList<String>
         )
         result = cli.runCommand(command)
@@ -129,7 +129,7 @@ class GCloud extends FlowPlugin {
  * @param config (required: true)
  * @param desc (required: false)
  * @param gcloudPath (required: true)
- * @param gcloudCconfigurationName (required: true)
+ * @param gcloudConfigurationName (required: true)
  * @param credential (required: true)
  * @param projectName (required: false)
  * @param gcloudProprties (required: false)

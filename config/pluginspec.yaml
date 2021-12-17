@@ -57,7 +57,7 @@ configuration:
     type: entry
     value: /usr/bin/gcloud
   -
-    name: gcloudCconfigurationName
+    name: gcloudConfigurationName
     label: gcloud configuration name
     documentation: The name of the Google Cloud Platform configuration.
     required: true

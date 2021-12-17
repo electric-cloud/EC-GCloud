@@ -56,8 +56,8 @@ class TestConfiguration extends Procedure {
     }
 
 
-    TestConfiguration gcloudCconfigurationName(String gcloudCconfigurationName) {
-        this.addParam('gcloudCconfigurationName', gcloudCconfigurationName)
+    TestConfiguration gcloudConfigurationName(String gcloudConfigurationName) {
+        this.addParam('gcloudConfigurationName', gcloudConfigurationName)
         return this
     }
 
