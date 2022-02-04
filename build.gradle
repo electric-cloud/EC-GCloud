@@ -27,6 +27,8 @@ repositories{
 dependencies {
     implementation 'org.codehaus.groovy:groovy-all:3.0.8'
 
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+
     // Change the version if you have upgraded the groovy library
     implementation 'com.electriccloud.plugins:flowpdf-groovy-lib:1.2.3.0'
 }

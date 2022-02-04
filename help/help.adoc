@@ -1,6 +1,6 @@
 Plugin version @PLUGIN_VERSION@
 
-Revised on December 16, 2021
+Revised on February 04, 2022
 
 
 
@@ -30,7 +30,7 @@ parameters on procedures that use them.
 
 To create plugin configurations in {CD}, do these steps:
 
-* Go to menu:Admistration[Plugins] to open the Plugin Manager.
+* Go to menu:Administration[Plugins] to open the Plugin Manager.
 * Find the @PLUGIN_NAME@ row.
 * Click *Configure* to open the
      Configurations page.
@@ -40,7 +40,7 @@ To create plugin configurations in {CD}, do these steps:
 
 === Configuration procedure parameters
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 
@@ -121,7 +121,7 @@ This procedure allows run any gcloud command.
 
 
 ==== Run Custom Command parameters
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 
@@ -137,7 +137,7 @@ This procedure allows run any gcloud command.
 | Sub-command | Name of the subcommands.
 
 
-| Options | Options to pass to gcloud executable. Eg.: --option-name [paramerer].
+| Options | Options to pass to gcloud executable. Eg.: --option-name[=paramerer].
 
 
 | __**Result property sheet**__ | Results will be saved into this property/property sheet.
@@ -149,7 +149,7 @@ This procedure allows run any gcloud command.
 
 ==== Output parameters
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 
@@ -170,7 +170,7 @@ This procedure allows run any commands.
 
 
 ==== Run Anything parameters
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 
@@ -189,7 +189,7 @@ This procedure allows run any commands.
 
 ==== Output parameters
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 

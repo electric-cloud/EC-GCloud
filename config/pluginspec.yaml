@@ -170,7 +170,7 @@ procedures:
     label: Options
     required: false
     type: textarea
-    documentation: "Options to pass to gcloud executable. Eg.: --option-name [paramerer]."
+    documentation: "Options to pass to gcloud executable. Eg.: --option-name[=paramerer]."
   #~ -
     #~ name: actionOnError
     #~ htmlDocumentation: Ignore error exception in specified cases.
