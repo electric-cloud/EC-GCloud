@@ -165,22 +165,6 @@ class GCloud extends FlowPlugin {
     }
 // === check connection ends ===
 
-    private static void processResult(StepResult sr, Boolean success, String summary, String resultPropertySheet, String output, String value = "") {
-        sr.setJobSummary(summary)
-
-        if (success) {
-            sr.setOutcomeProperty(resultPropertySheet, value)
-            sr.setOutputParameter(output, value)
-        }
-
-        sr.setJobStepOutcome(success ? 'success' : 'error')
-        sr.setJobStepSummary(summary)
-
-//        sr.setReportUrl("Sample Report", 'https://cloudbees.com')
-
-        sr.apply()
-    }
-
 /**
  * runCustomCommand - Run Custom Command/Run Custom Command
  * @param config (required: true)
@@ -210,7 +194,7 @@ class GCloud extends FlowPlugin {
 
         sp.subCommands.split(/\r?\n/).each {
             if (it) {
-                params.add(it)
+                params.add(it.trim())
             }
         }
 
@@ -224,15 +208,12 @@ class GCloud extends FlowPlugin {
             }
         }
 
-//        log.info("#001: " + params);
-
         Command command = cli.newCommand(config.getParameter("gcloudPath").value as String, params)
 
-//        log.info("#002: " + command.renderCommand().toString());
+        CallResult callResult = new CallResult()
+            .sr(sr)
+            .logger(log)
 
-        boolean success = true
-        String summary
-        String data = ""
         try {
             createConfig(log, config)
 
@@ -242,20 +223,17 @@ class GCloud extends FlowPlugin {
                 throw new RuntimeException("${result.code}: ${result.stdErr}")
             }
 
-            data = result.stdOut
-            summary = "The command succeeded: " + data
+            def data = result.stdOut
+
+            callResult
+                .summary("The command succeeded")
+                .flowProperty(sp.resultPropertySheet, data)
+                .outputParameter("runCustomCommand", data)
         } catch (Throwable e) {
-            success = false
-            summary = "The command failed: " + e.message
+            callResult.summary(e)
         }
 
-        String resultPropertySheet = sp.resultPropertySheet;
-        if (resultPropertySheet.isEmpty()) {
-            resultPropertySheet = "/myJob/runCustomCommand"
-            log.info("Assumed result property sheet: " + resultPropertySheet)
-        }
-
-        processResult(sr, success, summary, resultPropertySheet, "runCustomCommand", data)
+        callResult.processResult()
 
         log.info("step Run Custom Command has been finished")
     }
@@ -282,9 +260,10 @@ class GCloud extends FlowPlugin {
             anything = "#!/bin/bash" + System.lineSeparator() + System.lineSeparator() + anything
         }
 
-        boolean success = true
-        String summary
-        String data = ""
+        CallResult callResult = new CallResult()
+            .sr(sr)
+            .logger(log)
+
         try {
             createConfig(log, config)
 
@@ -293,11 +272,7 @@ class GCloud extends FlowPlugin {
             file.write(anything)
             file.setExecutable(true)
 
-//            log.info("#001: " + anything);
-
             Command command = cli.newCommand(file.absolutePath)
-
-//            log.info("#002: " + command.renderCommand().toString());
 
             ExecutionResult result = cli.runCommand(command)
             if (!result.isSuccess()) {
@@ -305,20 +280,16 @@ class GCloud extends FlowPlugin {
                 throw new RuntimeException("${result.code}: ${result.stdErr}")
             }
 
-            data = result.stdOut
-            summary = "The command succeeded: " + data
+            def data = result.stdOut
+            callResult
+                .summary("The command succeeded")
+                .flowProperty(sp.resultPropertySheet, data)
+                .outputParameter("runAnything", data)
         } catch (Throwable e) {
-            success = false
-            summary = "The command failed: " + e.message
+            callResult.summary(e)
         }
 
-        String resultPropertySheet = sp.resultPropertySheet;
-        if (resultPropertySheet.isEmpty()) {
-            resultPropertySheet = "/myJob/runAnything"
-            log.info("Assumed result property sheet: " + resultPropertySheet)
-        }
-
-        processResult(sr, success, summary, resultPropertySheet, "runAnything", data)
+        callResult.processResult()
 
         log.info("step Run Anything has been finished")
     }
