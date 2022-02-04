@@ -58,7 +58,7 @@ class RunAnythingTest extends PluginTestHelper {
         assert response.isSuccessful()
         assert response.outcome == outcome
         String result = response.jobProperties["runAnything"].toString()
-        println("#001: " + result)
+//        println("#001: " + result)
         assert result =~ expected
 
         where:

@@ -132,7 +132,7 @@ configuration:
     type: textarea
     documentation: |
       Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
-      Eg.: compute/zone asia-east1-b
+      E.g.: compute/zone asia-east1-b
   -
     name: checkConnectionResource
     label: Check configuration resource
@@ -149,50 +149,50 @@ procedures:
   parameters:
   -
     name: group
-    label: Group Of commands
+    label: Group of commands
     required: true
     type: entry
-    documentation: Name of the group of the commands.
+    documentation: "Name of the group of the commands, e.g.: compute, iam, secrets, etc."
   -
     name: command
     label: Command
     required: true
     type: entry
-    documentation: Name of the command.
+    documentation: "Name of the command, e.g.: instances, zones for 'compute' group of commands."
   -
     name: subCommands
     label: Sub-command
     required: false
     type: textarea
-    documentation: Name of the subcommands.
+    documentation: "Name of the subcommands, e.g.: list for 'compute zones' or 'compute instances'."
   -
     name: options
     label: Options
     required: false
     type: textarea
-    documentation: "Options to pass to gcloud executable. Eg.: --option-name[=paramerer]."
-  #~ -
-    #~ name: actionOnError
-    #~ htmlDocumentation: Ignore error exception in specified cases.
-    #~ label: Action on error
-    #~ type: select
-    #~ required: true
-    #~ value: 0
-    #~ options:
-      #~ - name: Throw error
-        #~ value: 0
-      #~ - name: Ignore If Matched
-        #~ value: '=~'
-      #~ - name: Ignore If Not Matched
-        #~ value: '!~'
-  #~ -
-    #~ name: errorValue
-    #~ label: Error value
-    #~ required: false
-    #~ type: entry
-    #~ documentation: Text for checking error condition.
-    #~ dependsOn: actionOnError
-    #~ condition: ${actionOnError} != "0"
+    documentation: "Options to pass to sub-command or/and gcloud executable. E.g.: --option-name[=optionValue]."
+  # -
+    # name: actionOnError
+    # htmlDocumentation: Ignore error exception in specified cases.
+    # label: Action on error
+    # type: select
+    # required: true
+    # value: 0
+    # options:
+      # - name: Throw error
+        # value: 0
+      # - name: Ignore If Matched
+        # value: '=~'
+      # - name: Ignore If Not Matched
+        # value: '!~'
+  # -
+    # name: errorValue
+    # label: Error value
+    # required: false
+    # type: entry
+    # documentation: Text for checking error condition.
+    # dependsOn: actionOnError
+    # condition: ${actionOnError} != "0"
   -
     name: resultPropertySheet
     label: Result property sheet
