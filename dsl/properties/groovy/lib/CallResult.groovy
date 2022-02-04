@@ -77,15 +77,9 @@ class CallResult {
         sr.setJobStepSummary(summary)
         sr.setJobStepOutcome(outcome)
 
-        if ((outcome != "error") && commit) {
-            String json = mapper.writeValueAsString(commit)
-
-            if (resultPropertySheet) {
-                sr.setOutcomeProperty(resultPropertySheet, json)
-            }
-
+        if (outcome != "error") {
             outputParameters.each {
-                if (it.value.is(String)) {
+                if (it.value instanceof String) {
                     sr.setOutputParameter(it.key, it.value.toString())
                 } else {
                     sr.setOutputParameter(it.key, mapper.writeValueAsString(it.value))
@@ -102,7 +96,7 @@ class CallResult {
         }
 
         flowProperties.each {
-            if (it.value.is(String)) {
+            if (it.value instanceof String) {
                 FlowAPI.setFlowProperty(it.key, it.value.toString())
             } else {
                 FlowAPI.setFlowProperty(it.key, mapper.writeValueAsString(it.value))

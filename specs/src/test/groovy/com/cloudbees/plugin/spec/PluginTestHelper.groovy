@@ -90,9 +90,9 @@ class PluginTestHelper extends Specification {
             || (!exists && (output.outcome == JobOutcome.ERROR) && (output.jobLog =~ /No such file or directory/)))
     }
 
-    def findRecord(List<Map> list, String name, String what) {
-        Map<String,Object> res = null
-        for (int i in 0..< list.size()) {
+    Map<String, String> findRecord(List<Map<String, String>> list, String name, String what) {
+        Map<String, Object> res = null
+        for (int i in 0..<list.size()) {
             if (list[i][name] == what) {
                 res = list[i]
                 break

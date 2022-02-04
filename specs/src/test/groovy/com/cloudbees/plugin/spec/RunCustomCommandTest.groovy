@@ -8,7 +8,6 @@ import com.cloudbees.pdk.hen.models.Project
 import com.cloudbees.pdk.hen.procedures.GCloudConfig
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.lang.Unroll
@@ -59,18 +58,18 @@ class RunCustomCommandTest extends PluginTestHelper {
             .run(runOpts)
 
         then:
+        println(response.jobLink)
         assert response.isSuccessful()
         assert response.outcome == outcome
-        List<Map> list = (new JsonSlurper()).parseText(response.jobProperties["runCustomCommand"].toString()) as List<Map>
-        def found = findRecord(list, name, what)
-//        println("#001: " + found)
+        List<Map<String, String>> list = (new JsonSlurper()).parseText(response.jobProperties["runCustomCommand"].toString()) as List<Map>
+        Map<String, String> found = findRecord(list, name, what)
         assert found
 
         where:
         caseId | group     | command         | subCommands | options         | outcome            | name   | what
-        "#010" | "compute" | "zones"         | "list"      | "--format json" | JobOutcome.SUCCESS | "name" | "us-east1-b"
-        "#011" | "compute" | "disk-types"    | "list"      | "--format json" | JobOutcome.SUCCESS | "name" | "pd-standard"
-        "#012" | "compute" | "machine-types" | "list"      | "--format json" | JobOutcome.SUCCESS | "name" | "n1-standard-1"
+        "#010" | "compute" | "zones"         | "list"      | "--format=json" | JobOutcome.SUCCESS | "name" | "us-east1-b"
+        "#011" | "compute" | "disk-types"    | "list"      | "--format=json" | JobOutcome.SUCCESS | "name" | "pd-standard"
+        "#012" | "compute" | "machine-types" | "list"      | "--format=json" | JobOutcome.SUCCESS | "name" | "n1-standard-1"
     }
 
 }

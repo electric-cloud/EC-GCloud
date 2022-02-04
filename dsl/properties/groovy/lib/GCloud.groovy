@@ -221,7 +221,7 @@ class GCloud extends FlowPlugin {
                 throw new RuntimeException("${result.code}: ${result.stdErr}")
             }
 
-            def data = result.stdOut
+            String data = result.stdOut
 
             callResult
                 .summary("The command succeeded")

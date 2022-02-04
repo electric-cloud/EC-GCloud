@@ -84,7 +84,7 @@ To create plugin configurations in {CD}, do these steps:
 
 
 |gcloud properties | Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
-Eg.: compute/zone asia-east1-b
+E.g.: compute/zone asia-east1-b
 
 
 
