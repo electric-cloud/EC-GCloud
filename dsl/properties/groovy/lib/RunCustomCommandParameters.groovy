@@ -6,7 +6,7 @@ import com.cloudbees.flowpdf.StepParameters
 
 class RunCustomCommandParameters {
     /**
-    * Label: Group Of commands, type: entry
+    * Label: Group of commands, type: entry
     */
     String group
     /**
@@ -43,4 +43,4 @@ class RunCustomCommandParameters {
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 2841349e959dd61073e1aa73bd16e69c ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 909bd2f2534ab86801b66d4e1ae4f296 ===
