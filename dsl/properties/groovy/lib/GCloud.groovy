@@ -172,8 +172,6 @@ class GCloud extends FlowPlugin {
  * @param command (required: true)
  * @param subCommands (required: false)
  * @param options (required: false)
- * @param actionOnError (required: true)
- * @param errorValue (required: false)
  * @param resultPropertySheet (required: true)
 
  */
@@ -199,7 +197,7 @@ class GCloud extends FlowPlugin {
         }
 
         sp.options.split(/\r?\n/).each {
-            String[] opts = it.split()
+            String[] opts = it.trim().split(/[=]+/, 2)
             if (opts.length > 0) {
                 params.add(opts[0])
                 if (opts.length > 1) {
