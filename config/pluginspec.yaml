@@ -152,25 +152,25 @@ procedures:
     label: Group of commands
     required: true
     type: entry
-    documentation: "Name of the group of the commands, e.g.: compute, iam, secrets, etc."
+    documentation: "Name of the group of the commands. E.g.: `info`, `compute`, `iam`, `secrets`, etc."
   -
     name: command
     label: Command
     required: false
     type: entry
-    documentation: "Name of the command, e.g.: instances, zones for 'compute' group of commands."
+    documentation: "Name of the command. E.g.: `instances`, `zones` for `compute` group of commands."
   -
     name: subCommands
-    label: Sub-command
+    label: Sub-commands/values
     required: false
     type: textarea
-    documentation: "Name of the subcommands, e.g.: list for 'compute zones' or 'compute instances'."
+    documentation: "Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute` + `zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`."
   -
     name: options
     label: Options
     required: false
     type: textarea
-    documentation: "Options to pass to sub-command or/and gcloud executable. E.g.: --option-name[=optionValue]."
+    documentation: "Options to pass to gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`."
   # -
     # name: actionOnError
     # htmlDocumentation: Ignore error exception in specified cases.

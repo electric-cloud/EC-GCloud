@@ -128,16 +128,16 @@ This procedure allows run any gcloud command.
 | __**Configuration Name**__ | Previously defined configuration for the plugin
 
 
-| __**Group of commands**__ | Name of the group of the commands, e.g.: compute, iam, secrets, etc.
+| __**Group of commands**__ | Name of the group of the commands. E.g.: `info`, `compute`, `iam`, `secrets`, etc.
 
 
-| Command | Name of the command, e.g.: instances, zones for 'compute' group of commands.
+| Command | Name of the command. E.g.: `instances`, `zones` for `compute` group of commands.
 
 
-| Sub-command | Name of the subcommands, e.g.: list for 'compute zones' or 'compute instances'.
+| Sub-commands/values | Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute` + `zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`.
 
 
-| Options | Options to pass to sub-command or/and gcloud executable. E.g.: --option-name[=optionValue].
+| Options | Options to pass to gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`.
 
 
 | __**Result property sheet**__ | Results will be saved into this property/property sheet.
@@ -205,6 +205,116 @@ This procedure allows run any commands.
 
 
 
+
+
+
+== Use cases
+
+
+=== Complex example
+
+==== info
+
+According to https://cloud.google.com/sdk/gcloud/reference/info[the official documentation] run the command.
+
+
+[,bash]
+----
+
+gcloud info --format="json(basic,tools)" --anonymize
+
+----
+
+where following are separate four parameters to procedure:
+
+* Group of commands: `info`
+* Command:
+* Sub-commands:
+* Options: `--format="json(basic,tools)", --anonymize`
+
+image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-01.png[role="screenshot"]
+
+Result:
+
+[,json]
+----
+
+{
+  "basic": {
+    "architecture": {
+      "file_name": "x86_64",
+      "id": "x86_64",
+      "name": "x86_64"
+    },
+    "locale": [
+      "en_US",
+      "UTF-8"
+    ],
+    "operating_system": {
+      "file_name": "linux",
+      "id": "LINUX",
+      "name": "Linux"
+    },
+    "python_location": "/usr/bin/python3",
+    "python_version": "3.8.10 (default, Sep 28 2021, 16:10:42) \n[GCC 9.3.0]",
+    "site_packages": false,
+    "version": "366.0.0"
+  },
+  "tools": {
+    "git_version": "git version 2.25.1",
+    "ssh_version": "OpenSSH_8.2p1 Ubuntu-4ubuntu0.3, OpenSSL 1.1.1f  31 Mar 2020"
+  }
+}
+
+----
+
+==== compute instances describe
+
+According to https://cloud.google.com/sdk/gcloud/reference/compute/instances/describe[the official documentation] run the command.
+
+
+[,bash]
+----
+
+gcloud compute instances describe test-instance --format="yaml(name,status,disks)"
+
+----
+
+where following are separate four parameters to procedure:
+
+* Group of commands: `compute`
+* Command: `instances`
+* Sub-commands: `describe`, `test-instance`
+* Options: `--format="yaml(name,status,disks)"`
+
+image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-02.png[role="screenshot"]
+
+
+Result:
+
+[,yaml]
+----
+
+disks:
+- autoDelete: true
+  boot: true
+  deviceName: persistent-disk-0
+  diskSizeGb: '10'
+  guestOsFeatures:
+  - type: UEFI_COMPATIBLE
+  - type: VIRTIO_SCSI_MULTIQUEUE
+  index: 0
+  interface: SCSI
+  kind: compute#attachedDisk
+  licenses:
+  - https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/debian-10-buster
+  mode: READ_WRITE
+  source: https://www.googleapis.com/compute/v1/projects/my-test-project/zones/us-east1-b/disks/test-instance
+  type: PERSISTENT
+name: test-instance
+status: RUNNING
+
+----
 
 
 
