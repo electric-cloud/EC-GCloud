@@ -291,7 +291,6 @@ status: RUNNING
 
 - Initial Version. The following procedures were added.
 * Run Custom Command
-* Run Anything
 
 
 
