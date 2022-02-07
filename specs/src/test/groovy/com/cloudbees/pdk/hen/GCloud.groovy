@@ -34,8 +34,6 @@ class GCloud extends Plugin {
 
 //    EditConfiguration editConfiguration = EditConfiguration.create(this)
 
-    RunAnything runAnything = RunAnything.create(this)
-
     RunCustomCommand runCustomCommand = RunCustomCommand.create(this)
 
     TestConfiguration testConfiguration = TestConfiguration.create(this)
