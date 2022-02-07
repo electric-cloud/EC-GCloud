@@ -128,16 +128,16 @@ This procedure allows run any gcloud command.
 | __**Configuration Name**__ | Previously defined configuration for the plugin
 
 
-| __**Group of commands**__ | Name of the group of the commands, e.g.: compute, iam, secrets, etc.
+| __**Group of commands**__ | Name of the group of the commands. E.g.: `info`, `compute`, `iam`, `secrets`, etc.
 
 
-| Command | Name of the command, e.g.: instances, zones for 'compute' group of commands.
+| Command | Name of the command. E.g.: `instances`, `zones` for `compute` group of commands.
 
 
-| Sub-commands | Name of the subcommands, e.g.: list for 'compute zones' or 'compute instances'.
+| Sub-commands/values | Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`.
 
 
-| Options | Options to pass to sub-command or/and gcloud executable separated by new lines. E.g.: --option-name[=optionValue].
+| Options | Options to pass to command or/and gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`.
 
 
 | __**Result property sheet**__ | Results will be saved into this property/property sheet.
