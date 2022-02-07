@@ -31,7 +31,7 @@ class RunCustomCommandParameters {
 
         def group = sp.getRequiredParameter('group').value
         parameters.group = group
-        def command = sp.getRequiredParameter('command').value
+        def command = sp.getParameter('command').value
         parameters.command = command
         def subCommands = sp.getParameter('subCommands').value
         parameters.subCommands = subCommands
@@ -43,4 +43,4 @@ class RunCustomCommandParameters {
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 909bd2f2534ab86801b66d4e1ae4f296 ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: deca4e39bc2bbd4743ff5fe012e1e50e ===

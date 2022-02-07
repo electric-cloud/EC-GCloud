@@ -156,7 +156,7 @@ procedures:
   -
     name: command
     label: Command
-    required: true
+    required: false
     type: entry
     documentation: "Name of the command, e.g.: instances, zones for 'compute' group of commands."
   -
