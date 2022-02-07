@@ -33,7 +33,7 @@ class RunAnythingTest extends PluginTestHelper {
     }
 
     @Unroll
-    def 'RunAnything: #caseId: #command'() {
+    def 'RunAnything: #caseId: #expected'() {
         when:
         GCloudConfig gcloudConfig = GCloudConfig.create(plugin)
         gcloudConfig.gcloudPath(gcloudPath)
