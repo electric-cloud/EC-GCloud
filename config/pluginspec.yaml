@@ -164,13 +164,13 @@ procedures:
     label: Sub-commands/values
     required: false
     type: textarea
-    documentation: "Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`."
+    documentation: "Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute` + `zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`."
   -
     name: options
     label: Options
     required: false
     type: textarea
-    documentation: "Options to pass to command or/and gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`."
+    documentation: "Options to pass to gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`."
   # -
     # name: actionOnError
     # htmlDocumentation: Ignore error exception in specified cases.
