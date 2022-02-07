@@ -184,29 +184,47 @@ class GCloud extends FlowPlugin {
 
         CLI cli = CLI.newInstance()
 
+        def group = sp.group ?: ""
+        if (!group) {
+            throw new RuntimeException("Group of commands is mandatory.")
+        }
+
         ArrayList<String> params = [
             '--quiet',
-            sp.group,
-            sp.command,
+            group,
         ]
+
+        def command = sp.command?: ""
+        if (command) {
+            params.add(command)
+        }
 
         sp.subCommands.split(/\r?\n/).each {
             if (it) {
-                params.add(it.trim())
+                String itm = it.trim().replaceFirst(/^['"]+/, "").replaceFirst(/['"]+$/, "")
+                if (itm != "") {
+                    params.add(itm)
+                }
             }
         }
 
         sp.options.split(/\r?\n/).each {
             String[] opts = it.trim().split(/[=]+/, 2)
             if (opts.length > 0) {
-                params.add(opts[0])
-                if (opts.length > 1) {
-                    params.add(opts[1])
+                String opt = opts[0].trim().replaceFirst(/^['"]+/, "").replaceFirst(/['"]+$/, "")
+                if (opt != "") {
+                    params.add(opt)
+                    if (opts.length > 1) {
+                        opt = opts[1].trim().replaceFirst(/^['"]+/, "").replaceFirst(/['"]+$/, "")
+                        if (opt != "") {
+                            params.add(opt)
+                        }
+                    }
                 }
             }
         }
 
-        Command command = cli.newCommand(config.getParameter("gcloudPath").value as String, params)
+        Command cliCommand = cli.newCommand(config.getParameter("gcloudPath").value as String, params)
 
         CallResult callResult = new CallResult()
             .sr(sr)
@@ -215,7 +233,7 @@ class GCloud extends FlowPlugin {
         try {
             createConfig(log, config)
 
-            ExecutionResult result = cli.runCommand(command)
+            ExecutionResult result = cli.runCommand(cliCommand)
             if (!result.isSuccess()) {
                 log.error(result)
                 throw new RuntimeException("${result.code}: ${result.stdErr}")
@@ -270,9 +288,9 @@ class GCloud extends FlowPlugin {
             file.write(anything)
             file.setExecutable(true)
 
-            Command command = cli.newCommand(file.absolutePath)
+            Command cliCommand = cli.newCommand(file.absolutePath)
 
-            ExecutionResult result = cli.runCommand(command)
+            ExecutionResult result = cli.runCommand(cliCommand)
             if (!result.isSuccess()) {
                 log.error(result)
                 throw new RuntimeException("${result.code}: ${result.stdErr}")

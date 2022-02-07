@@ -1,6 +1,6 @@
 Plugin version @PLUGIN_VERSION@
 
-Revised on February 04, 2022
+Revised on February 07, 2022
 
 
 
@@ -131,7 +131,7 @@ This procedure allows run any gcloud command.
 | __**Group of commands**__ | Name of the group of the commands, e.g.: compute, iam, secrets, etc.
 
 
-| __**Command**__ | Name of the command, e.g.: instances, zones for 'compute' group of commands.
+| Command | Name of the command, e.g.: instances, zones for 'compute' group of commands.
 
 
 | Sub-command | Name of the subcommands, e.g.: list for 'compute zones' or 'compute instances'.
