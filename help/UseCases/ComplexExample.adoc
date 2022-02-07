@@ -19,7 +19,7 @@ where following are separate four parameters to procedure:
 * Sub-commands:
 * Options: `--format="json(basic,tools)", --anonymize`
 
-image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-01.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-01.png[role="screenshot"]
 
 Result:
 
@@ -74,7 +74,7 @@ where following are separate four parameters to procedure:
 * Sub-commands: `describe`, `test-instance`
 * Options: `--format="yaml(name,status,disks)"`
 
-image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-02.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-gcloud/uc/ComplexExample-02.png[role="screenshot"]
 
 
 Result:
