@@ -14,7 +14,7 @@ class RunCustomCommandParameters {
     */
     String command
     /**
-    * Label: Sub-command, type: textarea
+    * Label: Sub-commands/values, type: textarea
     */
     String subCommands
     /**
@@ -43,4 +43,4 @@ class RunCustomCommandParameters {
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: deca4e39bc2bbd4743ff5fe012e1e50e ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 5d646d62cc96e17d10d7a4d135d861bb ===
