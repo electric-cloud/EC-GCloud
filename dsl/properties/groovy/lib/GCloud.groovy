@@ -254,62 +254,6 @@ class GCloud extends FlowPlugin {
         log.info("step Run Custom Command has been finished")
     }
 
-/**
- * runAnything - Run Anything/Run Anything
- * Add your code into this method and it will be called when the step runs
- * @param config (required: true)
- * @param anything (required: true)
- * @param resultPropertySheet (required: true)
-
- */
-    def runAnything(StepParameters p, StepResult sr) {
-        RunAnythingParameters sp = RunAnythingParameters.initParameters(p)
-
-        log.info("CONTEXT: " + context.getRunContext())
-
-        Config config = context.configValues
-
-        CLI cli = CLI.newInstance()
-
-        String anything = sp.anything
-        if (!(anything =~ /^#!/)) {
-            anything = "#!/bin/bash" + System.lineSeparator() + System.lineSeparator() + anything
-        }
-
-        CallResult callResult = new CallResult()
-            .sr(sr)
-            .logger(log)
-
-        try {
-            createConfig(log, config)
-
-            File file = File.createTempFile("anything", "")
-            file.deleteOnExit()
-            file.write(anything)
-            file.setExecutable(true)
-
-            Command cliCommand = cli.newCommand(file.absolutePath)
-
-            ExecutionResult result = cli.runCommand(cliCommand)
-            if (!result.isSuccess()) {
-                log.error(result)
-                throw new RuntimeException("${result.code}: ${result.stdErr}")
-            }
-
-            def data = result.stdOut
-            callResult
-                .summary("The command succeeded")
-                .flowProperty(sp.resultPropertySheet, data)
-                .outputParameter("runAnything", data)
-        } catch (Throwable e) {
-            callResult.summary(e)
-        }
-
-        callResult.processResult()
-
-        log.info("step Run Anything has been finished")
-    }
-
 // === step ends ===
 
 }

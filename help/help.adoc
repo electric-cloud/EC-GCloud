@@ -161,46 +161,6 @@ This procedure allows run any gcloud command.
 
 
 
-[[RunAnything]]
-=== Run Anything
-
-
-This procedure allows run any commands.
-
-
-
-==== Run Anything parameters
-[cols=",",options="header"]
-|===
-|Parameter |Description
-
-| __**Configuration Name**__ | Previously defined configuration for the plugin
-
-
-| __**Anything**__ | Anything to execution.
-
-
-| __**Result property sheet**__ | Results will be saved into this property/property sheet.
-
-
-|===
-
-
-
-==== Output parameters
-
-[cols=",",options="header"]
-|===
-|Parameter |Description
-
-|runAnything |STDOUT after accomplishing the command.
-
-|===
-
-
-
-
-
 
 
 
@@ -331,7 +291,6 @@ status: RUNNING
 
 - Initial Version. The following procedures were added.
 * Run Custom Command
-* Run Anything
 
 
 
