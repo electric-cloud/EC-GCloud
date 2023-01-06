@@ -3,7 +3,7 @@ services:
   electric-flow:
     container_name: efserver
     hostname: "efserver"
-    image: "electricflow/efserver:latest"
+    image: "us-east1-docker.pkg.dev/cloudbees-artifact-registry/flow/plugin-specs/electricflow/efserver:latest"
     ports:
       - "8000:8000"
       - "8443:8443"
@@ -14,7 +14,7 @@ services:
     tty: true
   efagent-gcloud:
     container_name: efagent-gcloud
-    image: electricflow/gcloud:latest
+    image: "us-east1-docker.pkg.dev/cloudbees-artifact-registry/flow/plugin-specs/electricflow/gcloud:latest"
     hostname: "efagent-gcloud"
     ports:
       - "7808:7808"
