@@ -19,7 +19,7 @@ buildscript {
 
     }
     dependencies {
-        classpath "com.cloudbees.cd.plugins:hen:+"
+        classpath "com.cloudbees.cd.plugins:hen:1.8.13"
     }
 }
 
@@ -71,7 +71,7 @@ dependencies {
     implementation 'com.jayway.restassured:rest-assured:2.9.0'
     implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
 
-    implementation("com.cloudbees.cd.plugins:hen:+") {
+    implementation("com.cloudbees.cd.plugins:hen:1.8.13") {
         exclude(group: "org.codehaus.groovy", module: "groovy-all")
     }
 }
