@@ -216,10 +216,10 @@ procedures:
     required: false
     type: textarea
     htmlDocumentation: |
-      Newline-separated options to pass to the gcloud executable. 
-      For example, `--option-name[=optionValue]`.
+      Newline-separated options to pass to the GCloud executable. 
+      For example, <code>--option-name[=optionValue]</code>.
     adoc: |
-      Options to pass to the gcloud executable, separated by new lines. 
+      Options to pass to the GCloud executable, separated by new lines. 
       For example, `--option-name[=optionValue]`.
   # -
     # name: actionOnError
