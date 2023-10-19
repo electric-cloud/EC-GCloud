@@ -4,7 +4,7 @@ pluginInfo:
   # Call flowpdk showdoc pluginspec to see the list of available fields and their description
   pluginName: 'EC-GCloud'
   version: '1.0.0'
-  description: 'Integration with gcloud command-line tool to create and manage Google Cloud resources.'
+  description: 'Integration with the gcloud command-line tool to create and manage Google Cloud resources.'
   author: 'CloudBees'
   supportUrl: https://cloudbees.com
   category: 'Utilities'
@@ -12,20 +12,20 @@ pluginInfo:
   supportLevel: 10
   hasAdoc: true
   help: https://docs.cloudbees.com/plugins/cd/ec-gcloud
-  label: gcloud tool
+  label: GCloud
   detailedDescription: |
-    The https://cloud.google.com/sdk/gcloud[``gcloud`` command-line tool] is the primary CLI tool to create and manage Google Cloud resources. You can use this tool to perform many common platform tasks either from the command line or in scripts and other automations.
-
-    For example, you can use the gcloud tool to create and manage:
-
-    * Compute Engine virtual machine instances and other resources
-    * Cloud SQL instances
-    * Google Kubernetes Engine clusters
-    * Dataproc clusters and jobs
-    * Cloud DNS managed zones and record sets
-    * Cloud Deployment Manager deployments
-
-    You can also use the ``gcloud`` tool to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
+    The <a href="https://cloud.google.com/sdk/gcloud"><code>gcloud command-line tool</code></a> is the primary CLI tool to create and manage Google Cloud resources. 
+    You can use this tool to perform many common platform tasks either from the command line or in scripts and other automations. For example, you can use the <code>gcloud</code> CLI to create and manage:
+    <ul>
+    <li>Compute Engine virtual machine instances and other resources</li>
+    <li>Cloud SQL instances</li>
+    <li>Google Kubernetes Engine clusters</li>
+    <li>Dataproc clusters and jobs</li>
+    <li>Cloud DNS managed zones and record sets</li>
+    <li>Cloud Deployment Manager deployments</li>
+    </ul>
+    <br/>
+    You can also use the <code>gcloud</code> CLI to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
 
 # Plugin configuration description
 configuration:
@@ -39,27 +39,39 @@ configuration:
   parameters:
   -
     name: config
-    documentation: The name for the created configuration
+    htmlDocumentation: |
+      The name for the created configuration.
+    adoc: |
+      The name for the created configuration.
     required: true
     type: entry
     label: Configuration name
   -
     name: desc
-    documentation: Description for the configuration
+    htmlDocumentation: |
+      Description for the configuration.
+    adoc: |
+      Description for the configuration.
     required: false
     type: entry
     label: Description
   -
     name: gcloudPath
-    label: gcloud path
-    documentation: An absolute or relative path to gcloud executable.
+    label: GCloud path
+    htmlDocumentation: |
+      An absolute or relative path to the GCloud executable.
+    adoc: |
+      An absolute or relative path to the GCloud executable.
     required: true
     type: entry
     value: /usr/bin/gcloud
   -
     name: gcloudConfigurationName
-    label: gcloud configuration name
-    documentation: The name of the Google Cloud Platform configuration.
+    label: GCloud configuration name
+    htmlDocumentation: |
+      The name of the Google Cloud Platform configuration.
+    adoc: |
+      The name of the Google Cloud Platform configuration.
     required: true
     type: entry
     value: default
@@ -74,29 +86,16 @@ configuration:
     required: false
     defaultValue: env
     label: Authorization type
-    documentation: |
-      Authorization type: either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
+    htmlDocumentation: |
+      Authorization type. 
+      Either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
+    adoc: |
+      Authorization type. 
+      Either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
   -
     name: credential
-    label: Service account key
-    documentation: |
-      Service account key in JSON format. For example,
-
-        {
-          "type": "service_account",
-          "project_id": "PROJECT ID",
-          "private_key_id": "PRIVATE KEY ID",
-          "private_key": "-----BEGIN PRIVATE KEY-----PRIVATE KEY CONTENT-----END PRIVATE KEY-----\n",
-          "client_email": "SERVICE ACCOUNT NAME@PROJECT ID.iam.gserviceaccount.com",
-          "client_id": "CLIENT ID",
-          "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-          "token_uri": "https://oauth2.googleapis.com/token",
-          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
-        }
-
     htmlDocumentation: |
-      Service account key in JSON format. For example,<br/>
+      Service account key in JSON format. For example:<br/>
       <pre>
       {
         "type": "service_account",
@@ -111,6 +110,24 @@ configuration:
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
       }
       </pre>
+    adoc: |
+      Service account key in JSON format. For example:
+      
+      [source,json]
+      ----
+      {
+        "type": "service_account",
+        "project_id": "PROJECT ID",
+        "private_key_id": "PRIVATE KEY ID",
+        "private_key": "-----BEGIN PRIVATE KEY-----PRIVATE KEY CONTENT-----END PRIVATE KEY-----\n",
+        "client_email": "SERVICE ACCOUNT NAME@PROJECT ID.iam.gserviceaccount.com",
+        "client_id": "CLIENT ID",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ACCOUNT ID"
+      }
+      ----
     required: false
     hideUserNameField: true
     type: credential
@@ -122,28 +139,40 @@ configuration:
   -
     name: projectName
     label: Project name
-    documentation: The name of the Google Cloud Platform project.
+    htmlDocumentation: |
+      The name of the Google Cloud Platform project.
+    adoc: |
+      The name of the Google Cloud Platform project.
     required: false
     type: entry
   -
     name: gcloudProprties
-    label: gcloud properties
+    label: GCloud properties
     required: false
     type: textarea
-    documentation: |
-      Properties to pass to the configuration in format: SECTION/PROPERTY VALUE.
-      E.g.: compute/zone asia-east1-b
+    htmlDocumentation: |
+      Properties to pass to the configuration in the following format: <code>section/property value</code>.
+      For example, <code>compute/zone asia-east1-b</code>.
+    adoc: |
+      Properties to pass to the configuration in the following format: `section/property value`.
+      For example, `compute/zone asia-east1-b`.
   -
     name: checkConnectionResource
     label: Check configuration resource
-    documentation: A resource that is used for the checking configuration. gcloud CLI must be installed on the resource.
+    htmlDocumentation: |
+      A resource that is used for the checking configuration. The <code>gcloud</code> CLI must be installed on the resource.
+    adoc: |
+      A resource that is used for the checking configuration. The `gcloud` CLI must be installed on the resource.
     required: false
     type: entry
 
 procedures:
 -
   name: 'Run Custom Command'
-  description: 'This procedure allows run any gcloud command.'
+  description: |
+    This procedure allows you to run any <code>gcloud</code> command.
+  adoc: |
+    This procedure allows run any `gcloud` command.
   # configuration field will be generated automatically
   hasConfig: true
   parameters:
@@ -152,25 +181,45 @@ procedures:
     label: Group of commands
     required: true
     type: entry
-    documentation: "Name of the group of the commands. E.g.: `info`, `compute`, `iam`, `secrets`, etc."
+    htmlDocumentation: |
+      Name of the group of the commands. 
+      For example, <code>info</code>, <code>compute</code>, <code>iam</code>, and <code>secrets</code>.
+    adoc: |
+      Name of the group of the commands. 
+      For example, `info`, `compute`, `iam`, and `secrets`.
   -
     name: command
     label: Command
     required: false
     type: entry
-    documentation: "Name of the command. E.g.: `instances`, `zones` for `compute` group of commands."
+    htmlDocumentation: |
+      Name of the command. 
+      For example, <code>instances</code>, <code>zones</code> for the <code>compute</code> group of commands.
+    adoc: |
+      Name of the command. 
+      For example, `instances`, `zones` for the `compute` group of commands.
   -
     name: subCommands
     label: Sub-commands/values
     required: false
     type: textarea
-    documentation: "Name of the subcommands/values for the command separated by new lines. E.g.: `list` for `compute` + `zones` or `compute` + `instances`; Name of the instance for `compute` + `instances`."
+    htmlDocumentation: |
+      Newline-separated names of subcommands or values for the command. 
+      For example, <code>list</code> for <code>compute</code> + <code>zones</code> or <code>compute</code> + <code>instances</code>; the name of the instance for <code>compute</code> + <code>instances</code>.
+    adoc: |
+      Newline-separated names of subcommands or values for the command.  
+      For example, `list` for `compute` + `zones` or `compute` + `instances`; the name of the instance for `compute` + `instances`.
   -
     name: options
     label: Options
     required: false
     type: textarea
-    documentation: "Options to pass to gcloud executable separated by new lines. E.g.: `--option-name[=optionValue]`."
+    htmlDocumentation: |
+      Newline-separated options to pass to the GCloud executable. 
+      For example, <code>--option-name[=optionValue]</code>.
+    adoc: |
+      Options to pass to the GCloud executable, separated by new lines. 
+      For example, `--option-name[=optionValue]`.
   # -
     # name: actionOnError
     # htmlDocumentation: Ignore error exception in specified cases.
@@ -190,7 +239,7 @@ procedures:
     # label: Error value
     # required: false
     # type: entry
-    # documentation: Text for checking error condition.
+    # htmlDocumentation: Text for checking error condition.
     # dependsOn: actionOnError
     # condition: ${actionOnError} != "0"
   -
@@ -198,7 +247,10 @@ procedures:
     label: Result property sheet
     required: true
     type: entry
-    documentation: Results will be saved into this property/property sheet.
+    htmlDocumentation: |
+      Results are saved into this property or property sheet.
+    adoc: |
+      Results are saved into this property or property sheet.
     value: /myJob/runCustomCommand
 
   outputParameters:
