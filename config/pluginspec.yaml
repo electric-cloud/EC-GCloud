@@ -16,7 +16,7 @@ pluginInfo:
   detailedDescription: |
     The <a href="https://cloud.google.com/sdk/gcloud"><code>gcloud command-line tool</code></a> is the primary CLI tool to create and manage Google Cloud resources. 
     You can use this tool to perform many common platform tasks either from the command line or in scripts and other automations.<br/>
-    For example, you can use the gcloud tool to create and manage:
+    For example, you can use the <code>gcloud</code> CLI to create and manage:
     <ul>
     <li>Compute Engine virtual machine instances and other resources</li>
     <li>Cloud SQL instances</li>
@@ -26,7 +26,7 @@ pluginInfo:
     <li>Cloud Deployment Manager deployments</li>
     </ul>
 
-    You can also use the `gcloud` tool to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
+    You can also use the <code>gcloud</code> tool to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
 
 # Plugin configuration description
 configuration:
