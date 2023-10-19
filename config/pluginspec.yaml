@@ -26,7 +26,7 @@ pluginInfo:
     <li>Cloud Deployment Manager deployments</li>
     </ul>
 
-    You can also use the <code>gcloud</code> tool to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
+    You can also use the <code>gcloud</code> CLI to deploy App Engine applications, manage authentication, customize local configuration, and perform other tasks.
 
 # Plugin configuration description
 configuration:
