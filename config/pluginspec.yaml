@@ -187,7 +187,7 @@ procedures:
       For example, <code>info</code>, <code>compute</code>, <code>iam</code>, and <code>secrets</code>.
     adoc: |
       Name of the group of the commands. 
-      For example,`info`, `compute`, `iam`, and `secrets`.
+      For example, `info`, `compute`, `iam`, and `secrets`.
   -
     name: command
     label: Command
