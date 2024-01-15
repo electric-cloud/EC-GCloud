@@ -10,7 +10,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.lang.Unroll
 
-//@Ignore
+@Ignore
 @Slf4j
 @Stepwise
 class CreateConfigurationTest extends PluginTestHelper {

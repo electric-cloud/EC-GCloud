@@ -3,18 +3,19 @@ pluginInfo:
   # Feel free to change it
   # Call flowpdk showdoc pluginspec to see the list of available fields and their description
   pluginName: 'EC-GCloud'
-  version: '1.0.0'
+  version: '1.1.0'
   description: 'Integration with the gcloud command-line tool to create and manage Google Cloud resources.'
   author: 'CloudBees'
   supportUrl: https://cloudbees.com
   category: 'Utilities'
   shell: 'ec-groovy'
+  minCommanderVersion: 10.11
   supportLevel: 10
   hasAdoc: true
   help: https://docs.cloudbees.com/plugins/cd/ec-gcloud
   label: GCloud
   detailedDescription: |
-    The <a href="https://cloud.google.com/sdk/gcloud"><code>gcloud command-line tool</code></a> is the primary CLI tool to create and manage Google Cloud resources. 
+    The <a href="https://cloud.google.com/sdk/gcloud"><code>gcloud command-line tool</code></a> is the primary CLI tool to create and manage Google Cloud resources.
     You can use this tool to perform many common platform tasks either from the command line or in scripts and other automations. For example, you can use the <code>gcloud</code> CLI to create and manage:
     <ul>
     <li>Compute Engine virtual machine instances and other resources</li>
@@ -87,10 +88,10 @@ configuration:
     defaultValue: env
     label: Authorization type
     htmlDocumentation: |
-      Authorization type. 
+      Authorization type.
       Either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
     adoc: |
-      Authorization type. 
+      Authorization type.
       Either provide a JSON key file or use the instance metadata (a service account should be assigned to the instance) to authenticate API calls.
   -
     name: credential
@@ -112,7 +113,7 @@ configuration:
       </pre>
     adoc: |
       Service account key in JSON format. For example:
-      
+
       [source,json]
       ----
       {
@@ -182,10 +183,10 @@ procedures:
     required: true
     type: entry
     htmlDocumentation: |
-      Name of the group of the commands. 
+      Name of the group of the commands.
       For example, <code>info</code>, <code>compute</code>, <code>iam</code>, and <code>secrets</code>.
     adoc: |
-      Name of the group of the commands. 
+      Name of the group of the commands.
       For example, `info`, `compute`, `iam`, and `secrets`.
   -
     name: command
@@ -193,10 +194,10 @@ procedures:
     required: false
     type: entry
     htmlDocumentation: |
-      Name of the command. 
+      Name of the command.
       For example, <code>instances</code>, <code>zones</code> for the <code>compute</code> group of commands.
     adoc: |
-      Name of the command. 
+      Name of the command.
       For example, `instances`, `zones` for the `compute` group of commands.
   -
     name: subCommands
@@ -204,10 +205,10 @@ procedures:
     required: false
     type: textarea
     htmlDocumentation: |
-      Newline-separated names of subcommands or values for the command. 
+      Newline-separated names of subcommands or values for the command.
       For example, <code>list</code> for <code>compute</code> + <code>zones</code> or <code>compute</code> + <code>instances</code>; the name of the instance for <code>compute</code> + <code>instances</code>.
     adoc: |
-      Newline-separated names of subcommands or values for the command.  
+      Newline-separated names of subcommands or values for the command.
       For example, `list` for `compute` + `zones` or `compute` + `instances`; the name of the instance for `compute` + `instances`.
   -
     name: options
@@ -215,10 +216,10 @@ procedures:
     required: false
     type: textarea
     htmlDocumentation: |
-      Newline-separated options to pass to the GCloud executable. 
+      Newline-separated options to pass to the GCloud executable.
       For example, <code>--option-name[=optionValue]</code>.
     adoc: |
-      Options to pass to the GCloud executable, separated by new lines. 
+      Options to pass to the GCloud executable, separated by new lines.
       For example, `--option-name[=optionValue]`.
   # -
     # name: actionOnError
