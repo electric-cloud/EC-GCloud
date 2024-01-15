@@ -61,10 +61,11 @@ class RunCustomCommandTest extends PluginTestHelper {
         println(response.jobLink)
         assert response.isSuccessful()
         assert response.outcome == outcome
-        String list = response.jobProperties["runCustomCommand"].toString()
-        println("#001: "+list.length())
-        println("#002: "+list)
-//        List<Map<String, String>> list = (new JsonSlurper()).parseText(response.jobProperties["runCustomCommand"].toString()) as List<Map>
+        String sList = response.jobProperties["runCustomCommand"].toString()
+        println("#001: "+sList.length())
+        println("#002: "+sList)
+        List<Map<String, String>> list = (new JsonSlurper()).parseText(sList) as List<Map>
+        println("#003: "+list.size())
 //        Map<String, String> found = findRecord(list, name, what)
 //        assert found
 
