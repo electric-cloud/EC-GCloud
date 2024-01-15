@@ -1,36 +1,45 @@
-apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'java'
+plugins {
+    // https://docs.gradle.org/current/userguide/groovy_plugin.html
+    id 'groovy'
+    id 'idea'
+    id 'java'
+}
 
-repositories{
-    mavenLocal()
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
         credentials {
-            username = nexusUsername
-            password = nexusPassword
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
         }
     }
     maven {
         url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
         credentials {
-            username = nexusUsername
-            password = nexusPassword
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
         }
     }
+
     flatDir {
         dirs 'agent/deps/libs'
+        dir new File("libs")
     }
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:3.0.8'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.19'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
 
-    // Change the version if you have upgraded the groovy library
-    implementation 'com.electriccloud.plugins:flowpdf-groovy-lib:1.2.3.0'
+    implementation 'com.electriccloud.plugins:flowpdf-groovy-lib:2.0.3.0'
 }
 
 

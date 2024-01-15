@@ -5,34 +5,41 @@ buildscript {
         maven {
             url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
             credentials {
-                username = nexusUsername
-                password = nexusPassword
+                username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+                password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
             }
         }
         maven {
             url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
             credentials {
-                username = nexusUsername
-                password = nexusPassword
+                username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+                password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
             }
         }
 
     }
     dependencies {
-        classpath "com.cloudbees.cd.plugins:hen:1.8.13"
+        classpath "com.cloudbees.cd.plugins:hen:2.0.2"
     }
 }
 
 plugins {
-    id "com.cloudbees.cd.plugins.specs" version "1.6.10.0"
+    id 'groovy'
+    id 'idea'
+    id 'java'
+    id "com.cloudbees.cd.plugins.specs" version "1.11.0.0"
 }
 
-apply plugin: 'com.cloudbees.cd.plugins.specs-hen'
-apply plugin: "groovy"
-apply plugin: 'idea'
-apply plugin: 'java'
+allprojects {
+    apply plugin: 'com.cloudbees.cd.plugins.specs-hen'
+}
 
-version = "1.0"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+version = "2.0"
 description = "EC-GCloud Specs"
 
 generateHenClasses {
@@ -47,42 +54,73 @@ repositories {
     maven {
         url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
         credentials {
-            username = nexusUsername
-            password = nexusPassword
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
         }
     }
     maven {
         url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
         credentials {
-            username = nexusUsername
-            password = nexusPassword
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
         }
     }
-
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:2.5.5'
-    implementation 'org.spockframework:spock-core:1.3-groovy-2.5'
-    implementation('com.electriccloud:ec-specs-plugins-core:1.9.2') {
+    implementation "org.codehaus.groovy:groovy-all:3.0.19"
+    implementation "org.spockframework:spock-core:2.4-M1-groovy-3.0"
+    implementation("com.electriccloud:ec-specs-plugins-core:3.0.0") {
         exclude(group: "org.codehaus.groovy", module: "groovy-all")
         exclude(group: "org.spockframework", module: "spock-core")
     }
-    implementation 'com.jayway.restassured:rest-assured:2.9.0'
+
+    testImplementation("io.rest-assured:rest-assured:5.4.0") {
+        // Exposure of Sensitive Information to an Unauthorized Actor in commons-codec:commons-codec before 1.13
+        // Cxeb68d52e-5509
+        // https://devhub.checkmarx.com/cve-details/Cxeb68d52e-5509/
+        exclude(group: "commons-codec", module: "commons-codec")
+
+        exclude(group: "org.apache.groovy", module: "groovy")
+        exclude(group: "org.apache.groovy", module: "groovy-json")
+        exclude(group: "org.apache.groovy", module: "groovy-xml")
+        exclude(group: "org.apache.groovy", module: "groovy-bom")
+    }
+    // Cxeb68d52e-5509
+    // Use the safest library for now: 2023-07-20.
+    implementation 'commons-codec:commons-codec:1.16.0'
+
+    implementation("com.cloudbees.cd.plugins:hen:2.0.2") {
+        exclude(group: "org.codehaus.groovy", module: "groovy-all")
+        exclude(group: "org.codehaus.groovy", module: "groovy")
+    }
+
     implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
 
-    implementation("com.cloudbees.cd.plugins:hen:1.8.13") {
-        exclude(group: "org.codehaus.groovy", module: "groovy-all")
-    }
+    implementation "org.slf4j:slf4j-api:1.7.36"
 }
-
 
 configureTests {
     environmentName = findProperty('envName') ?: 'default'
     readEnvironmentVariables = true
     readSecrets = true
+    dependsOn(['compileGroovy', 'compileTestGroovy', 'compileJava', 'compileTestJava', 'processResources', 'processTestResources'])
 }
 
 sendAllureReports {
     projectName = 'ec-gcloud'
+}
+
+configurations {
+    testCompile {
+        extendsFrom testImplementation
+        resolutionStrategy.force "io.qameta.allure:allure-spock:2.25.0"
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }

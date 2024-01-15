@@ -31,16 +31,20 @@ class RunCustomCommandParameters {
 
         def group = sp.getRequiredParameter('group').value
         parameters.group = group
+
         def command = sp.getParameter('command').value
         parameters.command = command
+
         def subCommands = sp.getParameter('subCommands').value
         parameters.subCommands = subCommands
+
         def options = sp.getParameter('options').value
         parameters.options = options
+
         def resultPropertySheet = sp.getRequiredParameter('resultPropertySheet').value
-        parameters.resultPropertySheet = resultPropertySheet
+        parameters.resultPropertySheet = resultPropertySheet  ?: '/myJob/runCustomCommand'
 
         return parameters
     }
 }
-// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: 5d646d62cc96e17d10d7a4d135d861bb ===
+// DO NOT EDIT THIS BLOCK ABOVE ^^^=== Parameters ends, checksum: b38723874de30ba90458f5b5ef5bfdf9 ===

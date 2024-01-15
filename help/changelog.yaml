@@ -1,3 +1,9 @@
 1.0.0:
   - |
     Initial Version. Support for the *Run Custom Command* was added.
+1.1.0:
+  - Updated third-party dependencies.
+  - |
+    Migrated to Java 17 and Groovy 3.
+    +
+    NOTE: Because of the Java versions supported by {PRODUCT}, you can only use EC-GCloud v1.1.0 with {PRODUCT} agents v10.11 and later.
