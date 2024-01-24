@@ -7,3 +7,4 @@
     Migrated to Java 17 and Groovy 3.
     +
     NOTE: Because of the Java versions supported by {PRODUCT}, you can only use EC-GCloud v1.1.0 with {PRODUCT} agents v10.11 and later.
+  - Added IPv6 support to setup procedure. Both, IPv4 and IPv6 addresses are now automatically supported.
